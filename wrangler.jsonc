@@ -1,0 +1,8 @@
+{
+  "name": "port-folio",
+  "compatibility_date": "2026-03-17",
+  "main": "src/worker.js",
+  "assets": {
+    "directory": "."
+  }
+}
