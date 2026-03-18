@@ -60,7 +60,7 @@ const projects = [
                         <div class="project-tags">
                             {p.tags.map(t => <span class="tag">{t}</span>)}
                         </div>
-                        <a href={p.link} target={p.link !== '#' ? '_blank' : undefined} rel="noopener" class="project-link">
+                        <a href={p.link} target={p.link !== '#' ? '_blank' : undefined} rel={p.link !== '#' ? 'noopener noreferrer' : undefined} class="project-link">
                             {p.linkLabel}
                         </a>
                     </div>

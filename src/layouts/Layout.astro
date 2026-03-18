@@ -4,31 +4,75 @@ interface Props {
     description?: string;
 }
 const {
-    title       = 'Daniel Navacerrada — Desarrollador de Software',
-    description = 'Portfolio profesional de Daniel Navacerrada Varón - Especializado en .NET, Java y automatización empresarial.',
+    title       = 'Daniel Navacerrada — Desarrollador de Software en Madrid',
+    description = 'Portfolio de Daniel Navacerrada Varón, desarrollador de software en Madrid especializado en .NET, Java, automatización con N8N y seguridad web. Disponible para proyectos freelance.',
 } = Astro.props;
+
+const siteUrl   = 'https://navacerradavaron.com';
+const ogImage   = `${siteUrl}/logo.svg`;
+
+const jsonLd = {
+    '@context':   'https://schema.org',
+    '@type':      'Person',
+    name:         'Daniel Navacerrada Varón',
+    url:          siteUrl,
+    jobTitle:     'Desarrollador de Software',
+    description:  'Desarrollador de software especializado en .NET, Java y automatización empresarial con N8N. Disponible para proyectos freelance en Madrid.',
+    address: {
+        '@type':           'PostalAddress',
+        addressLocality:   'Madrid',
+        addressCountry:    'ES',
+    },
+    knowsAbout:   ['.NET', 'C#', 'Java', 'SQL Server', 'MySQL', 'N8N', 'OCR', 'Seguridad Web', 'APIs REST'],
+    sameAs:       ['https://www.linkedin.com/in/daniel-navacerrada-var%C3%B3n-9323821b8/'],
+    contactPoint: {
+        '@type':       'ContactPoint',
+        contactType:   'customer service',
+        email:         'info@navacerradavaron.com',
+        availableLanguage: ['Spanish', 'English'],
+    },
+};
 ---
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#080810" />
-    <meta name="author" content="Daniel Navacerrada Varón" />
+    <meta name="description"  content={description} />
+    <meta name="robots"       content="index, follow" />
+    <meta name="theme-color"  content="#080810" />
+    <meta name="author"       content="Daniel Navacerrada Varón" />
 
+    <!-- Canonical -->
+    <link rel="canonical" href={siteUrl} />
+
+    <!-- Open Graph -->
     <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={siteUrl} />
     <meta property="og:title"       content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale"      content="es_ES" />
+    <meta property="og:image"       content={ogImage} />
 
+    <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
     <meta name="twitter:title"       content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon"      href="/logo.svg" type="image/svg+xml" />
+    <link rel="sitemap"   href="/sitemap-index.xml" />
+
+    <!-- Preconnect fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <title>{title}</title>
-    <link rel="icon" href="/logo.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles/global.css" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </head>
 <body>
     <!-- Scroll progress bar -->
@@ -39,7 +83,9 @@ const {
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
 
-    <slot />
+    <main>
+        <slot />
+    </main>
 
     <script>
         // ── Scroll progress bar ──
@@ -60,7 +106,6 @@ const {
             });
         }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
-        // Auto-assign stagger delays to grid children
         document.querySelectorAll('.projects-grid, .services-grid, .skills-list, .timeline').forEach(grid => {
             grid.querySelectorAll('.reveal').forEach((el, i) => {
                 el.setAttribute('data-delay', String((i % 6) + 1));
@@ -121,14 +166,11 @@ const {
             const animate = () => {
                 currentX = lerp(currentX, targetX, 0.1);
                 currentY = lerp(currentY, targetY, 0.1);
-
                 const dx = Math.abs(currentX - targetX);
                 const dy = Math.abs(currentY - targetY);
-
                 el.style.transform = isHovered
                     ? `perspective(900px) rotateX(${currentX}deg) rotateY(${currentY}deg) translateY(-6px) scale(1.02)`
                     : `perspective(900px) rotateX(${currentX}deg) rotateY(${currentY}deg) translateY(0px) scale(1)`;
-
                 if (dx > 0.01 || dy > 0.01 || isHovered) {
                     rafId = requestAnimationFrame(animate);
                 } else {
@@ -137,11 +179,7 @@ const {
                 }
             };
 
-            el.addEventListener('mouseenter', () => {
-                isHovered = true;
-                rafId = requestAnimationFrame(animate);
-            });
-
+            el.addEventListener('mouseenter', () => { isHovered = true; rafId = requestAnimationFrame(animate); });
             el.addEventListener('mousemove', (e) => {
                 const rect = el.getBoundingClientRect();
                 const x    = (e as MouseEvent).clientX - rect.left;
@@ -149,11 +187,8 @@ const {
                 targetX    = ((y - rect.height / 2) / rect.height) * -8;
                 targetY    = ((x - rect.width  / 2) / rect.width)  *  8;
             });
-
             el.addEventListener('mouseleave', () => {
-                isHovered = false;
-                targetX   = 0;
-                targetY   = 0;
+                isHovered = false; targetX = 0; targetY = 0;
                 rafId = requestAnimationFrame(animate);
             });
         });
