@@ -10,7 +10,19 @@ const links = [
 ---
 <nav>
     <div class="nav-container">
-        <div class="logo">DNV</div>
+        <a href="#hero" class="logo" aria-label="Inicio">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" width="32" height="32">
+                <defs>
+                    <linearGradient id="navG" x1="4" y1="5" x2="37" y2="35" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#a78bfa"/>
+                        <stop offset="1" stop-color="#ec4899"/>
+                    </linearGradient>
+                </defs>
+                <path fill-rule="evenodd" fill="url(#navG)"
+                    d="M4 5 L4 35 L17 35 C33 35 37 27 37 20 C37 13 33 5 17 5 Z
+                       M11 12 L11 28 L17 28 C24 28 28 24.5 28 20 C28 15.5 24 12 17 12 Z"/>
+            </svg>
+        </a>
         <button class="hamburger" id="menuBtn" aria-label="Menú">
             <span></span><span></span><span></span>
         </button>

@@ -50,14 +50,12 @@ nav {
     align-items: center;
 }
 .logo {
-    font-size: 1.2rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    background: linear-gradient(135deg, var(--primary-light), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity 0.3s, transform 0.3s;
 }
+.logo:hover { opacity: 0.85; transform: scale(1.05); }
 .nav-links {
     display: flex;
     gap: 2rem;
