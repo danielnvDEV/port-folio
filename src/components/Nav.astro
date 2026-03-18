@@ -1,0 +1,29 @@
+---
+const links = [
+    { href: '#hero',       label: 'Inicio' },
+    { href: '#about',      label: 'Sobre mí' },
+    { href: '#experience', label: 'Experiencia' },
+    { href: '#projects',   label: 'Proyectos' },
+    { href: '#services',   label: 'Servicios' },
+    { href: '#contact',    label: 'Contacto' },
+];
+---
+<nav>
+    <div class="nav-container">
+        <div class="logo">DNV</div>
+        <button class="hamburger" id="menuBtn" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            {links.map(l => <li><a href={l.href}>{l.label}</a></li>)}
+            <li><a href="#contact" class="nav-cta">Contactar</a></li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    const btn   = document.getElementById('menuBtn')!;
+    const links = document.getElementById('navLinks')!;
+    btn.addEventListener('click', () => links.classList.toggle('open'));
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>

@@ -1,14 +1,13 @@
 {
   "name": "portfolio",
+  "type": "module",
   "version": "1.0.0",
-  "description": "Portfolio personal de Daniel Navacerrada Varón",
   "scripts": {
-    "dev": "node server.js"
+    "dev":     "astro dev",
+    "build":   "astro build",
+    "preview": "astro preview"
   },
   "dependencies": {
-    "cors":    "^2.8.5",
-    "dotenv":  "^16.4.5",
-    "express": "^4.19.2",
-    "resend":  "^3.2.0"
+    "astro": "^4.15.0"
   }
 }

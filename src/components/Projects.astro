@@ -1,0 +1,71 @@
+---
+const projects = [
+    {
+        num:   '01',
+        icon:  '🚂',
+        thumb: 'project-thumb-1',
+        title: 'Orient Express',
+        desc:  'Web completa desarrollada y desplegada bajo mi dominio personal. Diseño responsivo, rendimiento optimizado y experiencia de usuario cuidada.',
+        tags:  ['HTML', 'CSS', 'JavaScript'],
+        link:  'https://orientexpress.navacerradavaron.com',
+        linkLabel: 'Visitar web →',
+    },
+    {
+        num:   '02',
+        icon:  '🌿',
+        thumb: 'project-thumb-2',
+        title: 'Jarilla Viva',
+        desc:  'Proyecto web desarrollado y publicado bajo dominio propio. Interfaz limpia y adaptada a múltiples dispositivos con foco en accesibilidad.',
+        tags:  ['HTML', 'CSS', 'JavaScript'],
+        link:  'https://jarillaviva.navacerradavaron.com',
+        linkLabel: 'Visitar web →',
+    },
+    {
+        num:   '03',
+        icon:  '🤖',
+        thumb: 'project-thumb-3',
+        title: 'Automatización de Facturas',
+        desc:  'Sistema de procesamiento automático de facturas con OCR y N8N para extraer datos y almacenarlos en SQL Server con validación inteligente.',
+        tags:  ['N8N', 'OCR', 'SQL Server'],
+        link:  '#',
+        linkLabel: 'Ver más →',
+    },
+    {
+        num:   '04',
+        icon:  '🔗',
+        thumb: 'project-thumb-4',
+        title: 'API REST con .NET',
+        desc:  'API REST escalable con .NET Core siguiendo arquitectura limpia, autenticación segura, validación de datos y documentación Swagger.',
+        tags:  ['.NET', 'C#', 'SQL', 'Swagger'],
+        link:  '#',
+        linkLabel: 'Ver más →',
+    },
+];
+---
+<section id="projects">
+    <div class="container">
+        <p class="section-label reveal">Mi trabajo</p>
+        <h2 class="section-title reveal">Proyectos Destacados</h2>
+        <p class="section-desc reveal">Webs y herramientas que he diseñado, desarrollado y desplegado de principio a fin.</p>
+        <div class="projects-grid">
+            {projects.map(p => (
+                <div class="project-card reveal">
+                    <div class={`project-thumb ${p.thumb}`}>
+                        <span class="project-icon">{p.icon}</span>
+                        <div class="project-num">{p.num}</div>
+                    </div>
+                    <div class="project-body">
+                        <h3>{p.title}</h3>
+                        <p>{p.desc}</p>
+                        <div class="project-tags">
+                            {p.tags.map(t => <span class="tag">{t}</span>)}
+                        </div>
+                        <a href={p.link} target={p.link !== '#' ? '_blank' : undefined} rel="noopener" class="project-link">
+                            {p.linkLabel}
+                        </a>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

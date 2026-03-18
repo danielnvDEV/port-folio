@@ -1,0 +1,57 @@
+---
+interface Props {
+    title?: string;
+    description?: string;
+}
+const {
+    title       = 'Daniel Navacerrada — Desarrollador de Software',
+    description = 'Portfolio profesional de Daniel Navacerrada Varón - Especializado en .NET, Java y automatización empresarial.',
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#080810" />
+    <meta name="author" content="Daniel Navacerrada Varón" />
+
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale"      content="es_ES" />
+
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <title>{title}</title>
+    <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+    <slot />
+
+    <script>
+        // Scroll reveal
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+        setTimeout(() => {
+            document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+        }, 1500);
+
+        // Nav activo en scroll
+        const sections   = document.querySelectorAll('section[id]');
+        const navAnchors = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 220) current = s.id; });
+            navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+        }, { passive: true });
+    </script>
+</body>
+</html>

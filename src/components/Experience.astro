@@ -1,0 +1,46 @@
+---
+const jobs = [
+    {
+        period:  'Oct 2025 — Presente',
+        role:    'Desarrollador de Software',
+        company: 'Provimad · Madrid, España',
+        desc:    'Desarrollo de software y automatización de procesos empresariales. Diseño e implementación de flujos de trabajo con N8N integrados con OCR para el procesamiento inteligente de documentos.',
+        tags:    ['.NET', 'N8N', 'OCR', 'Automatización'],
+    },
+    {
+        period:  '2024 — Presente',
+        role:    'Desarrollador Freelance',
+        company: 'Proyectos independientes · Madrid, España',
+        desc:    'Desarrollo y despliegue de aplicaciones web completas bajo dominio propio. Automatización de procesos empresariales con N8N y OCR. Diseño e implementación de APIs REST con .NET Core.',
+        tags:    ['.NET', 'N8N', 'SQL Server', 'Self-hosting'],
+    },
+    {
+        period:  '2022 — 2024',
+        role:    'Formación en Desarrollo de Software',
+        company: 'Aprendizaje autodidacta & proyectos personales',
+        desc:    'Construcción de bases sólidas en programación orientada a objetos, estructuras de datos y arquitectura de software. Proyectos prácticos con Java y .NET.',
+        tags:    ['Java', 'C#', 'SQL', 'Git'],
+    },
+];
+---
+<section id="experience">
+    <div class="container">
+        <p class="section-label reveal">Trayectoria</p>
+        <h2 class="section-title reveal">Experiencia</h2>
+        <p class="section-desc reveal">Mi camino profesional en el desarrollo de software.</p>
+        <div class="timeline">
+            {jobs.map(j => (
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-period">{j.period}</div>
+                    <div class="timeline-role">{j.role}</div>
+                    <div class="timeline-company">{j.company}</div>
+                    <div class="timeline-desc">{j.desc}</div>
+                    <div class="timeline-tags">
+                        {j.tags.map(t => <span class="timeline-tag">{t}</span>)}
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

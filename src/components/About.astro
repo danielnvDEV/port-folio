@@ -1,0 +1,35 @@
+---
+const skills = [
+    { icon: 'BE',  title: 'Backend',        desc: '.NET Core, C#, Java, Node.js' },
+    { icon: 'DB',  title: 'Bases de Datos', desc: 'SQL Server, MySQL, diseño y optimización' },
+    { icon: 'FE',  title: 'Frontend',       desc: 'HTML, CSS, JavaScript' },
+    { icon: '🔐',  title: 'Seguridad',      desc: 'OWASP Top 10, validación de entrada' },
+    { icon: 'N8',  title: 'Automatización', desc: 'N8N, flujos de trabajo, OCR' },
+    { icon: 'OPS', title: 'DevOps',         desc: 'Git, self-hosting, infraestructura' },
+];
+---
+<section id="about">
+    <div class="container">
+        <p class="section-label reveal">Quién soy</p>
+        <h2 class="section-title reveal">Apasionado por crear software que importa</h2>
+        <div class="about-grid">
+            <div class="about-text reveal">
+                <p>Con 23 años y experiencia sólida en desarrollo backend y full stack, me especializo en crear soluciones robustas y escalables usando .NET como tecnología principal.</p>
+                <p>Me entusiasma trabajar en proyectos desafiantes que requieren optimización de rendimiento, arquitectura limpia y atención al detalle. Actualmente enfocado en automatización empresarial con N8N y seguridad de aplicaciones web.</p>
+                <p>Aprendiz continuo que se mantiene al día con las tendencias tecnológicas y siempre busca mejorar sus habilidades y entregar valor real.</p>
+                <a href="#contact" class="btn-primary" style="margin-top:1.5rem">Hablemos</a>
+            </div>
+            <div class="skills-list reveal">
+                {skills.map(s => (
+                    <div class="skill-item">
+                        <div class="skill-icon">{s.icon}</div>
+                        <div class="skill-info">
+                            <h4>{s.title}</h4>
+                            <p>{s.desc}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

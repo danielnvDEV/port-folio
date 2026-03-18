@@ -1,0 +1,77 @@
+---
+const techs = ['.NET', 'Java', 'HTML/CSS/JS', 'SQL Server', 'MySQL', 'Git', 'N8N'];
+---
+<section id="hero">
+    <div class="hero">
+        <div class="hero-left">
+            <span class="hero-eyebrow">
+                <span class="status-dot"></span>
+                Disponible para proyectos
+            </span>
+            <h1>Hola, soy<br /><span class="hero-highlight">Daniel Navacerrada</span></h1>
+            <p class="hero-sub">
+                Especializado en <strong style="color:var(--text-primary)">.NET</strong> · Full Stack · 23 años ·
+                Transformo ideas en software escalable y de alto rendimiento.
+            </p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn-primary">Ver mis proyectos</a>
+                <a href="#contact"  class="btn-ghost">Ponerse en contacto</a>
+            </div>
+            <div class="hero-stats reveal">
+                <div class="stat-item">
+                    <div class="stat-number">4+</div>
+                    <div class="stat-label">Proyectos web</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2+</div>
+                    <div class="stat-label">Años exp.</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">7+</div>
+                    <div class="stat-label">Tecnologías</div>
+                </div>
+            </div>
+            <div class="tech-stack">
+                {techs.map(t => <span class="tech-badge">{t}</span>)}
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="code-window">
+                <div class="window-bar">
+                    <span class="window-dot red"></span>
+                    <span class="window-dot yellow"></span>
+                    <span class="window-dot green"></span>
+                    <span class="window-title">Daniel.cs</span>
+                </div>
+                <div class="window-body">
+                    <div class="code-line"><span class="c-keyword">public class</span> <span class="c-class">Daniel</span> <span class="c-brace">{</span></div>
+                    <div class="code-line code-indent"><span class="c-prop">string</span> role     = <span class="c-string">"Dev Software"</span>;</div>
+                    <div class="code-line code-indent"><span class="c-prop">string</span> location = <span class="c-string">"Madrid, ES"</span>;</div>
+                    <div class="code-line code-indent"><span class="c-prop">string[]</span> stack  = <span class="c-brace">{</span></div>
+                    <div class="code-line" style="padding-left:3rem"><span class="c-string">".NET"</span>, <span class="c-string">"Java"</span>,</div>
+                    <div class="code-line" style="padding-left:3rem"><span class="c-string">"SQL"</span>, <span class="c-string">"N8N"</span></div>
+                    <div class="code-line code-indent"><span class="c-brace">};</span></div>
+                    <div class="code-line code-indent"><span class="c-prop">bool</span> available  = <span class="c-bool">true</span>;</div>
+                    <div class="code-line"><span class="c-brace">}</span><span class="code-cursor"></span></div>
+                    <div class="code-line" style="margin-top:0.75rem"><span class="c-comment">// 📍 Disponible para nuevos proyectos</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    #hero {
+        position: relative;
+        z-index: 1;
+    }
+    #hero::before {
+        content: '';
+        position: absolute;
+        top: 15%; left: 30%;
+        width: 600px; height: 400px;
+        background: radial-gradient(ellipse, rgba(124,58,237,0.1) 0%, transparent 70%);
+        pointer-events: none;
+    }
+</style>

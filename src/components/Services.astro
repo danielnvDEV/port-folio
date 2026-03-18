@@ -1,0 +1,27 @@
+---
+const services = [
+    { icon: '🏗️', title: 'Desarrollo Backend',  desc: 'APIs escalables, microservicios y sistemas robustos con .NET y Node.js.', badge: 'Popular' },
+    { icon: '🔐', title: 'Seguridad Web',        desc: 'Auditorías y remediación de vulnerabilidades OWASP Top 10.' },
+    { icon: '⚡', title: 'Automatización',        desc: 'Flujos automatizados con N8N, OCR y procesamiento de documentos.' },
+    { icon: '📊', title: 'Bases de Datos',        desc: 'Diseño, optimización y administración de SQL Server y MySQL.' },
+    { icon: '🌐', title: 'Full Stack',            desc: 'Desarrollo completo de aplicaciones web responsivas de alto rendimiento.' },
+    { icon: '⚙️', title: 'DevOps & Infra',        desc: 'Gestión de infraestructura, self-hosting y optimización de servidores.' },
+];
+---
+<section id="services">
+    <div class="container">
+        <p class="section-label reveal">Qué ofrezco</p>
+        <h2 class="section-title reveal">Servicios</h2>
+        <p class="section-desc reveal">Soluciones técnicas end-to-end, desde el diseño hasta el despliegue.</p>
+        <div class="services-grid">
+            {services.map(s => (
+                <div class="service-card reveal">
+                    {s.badge && <span class="service-badge">{s.badge}</span>}
+                    <div class="service-icon">{s.icon}</div>
+                    <h3>{s.title}</h3>
+                    <p>{s.desc}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
