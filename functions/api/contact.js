@@ -26,30 +26,32 @@ export async function onRequestPost(context) {
             reply_to: email,
             subject:  asunto || 'Nuevo mensaje desde el portfolio',
             html: `
-                <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px;background:#0f0f1a;color:#f8fafc;border-radius:12px">
-                    <h2 style="margin:0 0 24px;font-size:20px;background:linear-gradient(135deg,#a78bfa,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent">
-                        Nuevo mensaje desde tu portfolio
-                    </h2>
-                    <table style="width:100%;border-collapse:collapse">
-                        <tr>
-                            <td style="padding:10px 0;color:#94a3b8;font-size:13px;width:90px">Nombre</td>
-                            <td style="padding:10px 0;font-size:14px">${nombre}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px 0;color:#94a3b8;font-size:13px">Email</td>
-                            <td style="padding:10px 0;font-size:14px"><a href="mailto:${email}" style="color:#a78bfa">${email}</a></td>
-                        </tr>
-                        <tr>
-                            <td style="padding:10px 0;color:#94a3b8;font-size:13px">Asunto</td>
-                            <td style="padding:10px 0;font-size:14px">${asunto || '—'}</td>
-                        </tr>
-                    </table>
-                    <div style="margin-top:24px;padding:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:14px;line-height:1.7;color:#cbd5e1">
-                        ${mensaje.replace(/\n/g, '<br>')}
+                <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
+                    <div style="padding:8px 24px;background:#7c3aed">
+                        <p style="margin:0;font-size:12px;font-weight:600;color:#ffffff;letter-spacing:1px;text-transform:uppercase">Portfolio · Nuevo mensaje</p>
                     </div>
-                    <p style="margin-top:24px;font-size:12px;color:#475569">
-                        Responde directamente a este email para contestar a ${nombre}.
-                    </p>
+                    <div style="padding:28px 24px">
+                        <table style="width:100%;border-collapse:collapse;font-size:14px">
+                            <tr>
+                                <td style="padding:10px 0;color:#6b7280;width:80px;vertical-align:top;border-bottom:1px solid #f3f4f6">Nombre</td>
+                                <td style="padding:10px 0;color:#111827;font-weight:600;border-bottom:1px solid #f3f4f6">${nombre}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:10px 0;color:#6b7280;vertical-align:top;border-bottom:1px solid #f3f4f6">Email</td>
+                                <td style="padding:10px 0;border-bottom:1px solid #f3f4f6"><a href="mailto:${email}" style="color:#7c3aed;text-decoration:none">${email}</a></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:10px 0;color:#6b7280;vertical-align:top">Asunto</td>
+                                <td style="padding:10px 0;color:#111827">${asunto || '—'}</td>
+                            </tr>
+                        </table>
+                        <div style="margin-top:20px;padding:16px;background:#f9fafb;border-left:3px solid #7c3aed;border-radius:0 4px 4px 0;font-size:14px;line-height:1.7;color:#374151">
+                            ${mensaje.replace(/\n/g, '<br>')}
+                        </div>
+                    </div>
+                    <div style="padding:12px 24px;background:#f9fafb;border-top:1px solid #e5e7eb">
+                        <p style="margin:0;font-size:12px;color:#9ca3af">Responde a este email para contestar directamente a ${nombre}.</p>
+                    </div>
                 </div>
             `,
         }),
