@@ -30,28 +30,100 @@ const {
     <link rel="stylesheet" href="/styles/global.css" />
 </head>
 <body>
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Background blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
     <slot />
 
     <script>
-        // Scroll reveal
+        // ── Scroll progress bar ──
+        const bar = document.getElementById('scrollProgress')!;
+        window.addEventListener('scroll', () => {
+            const total  = document.body.scrollHeight - window.innerHeight;
+            const pct    = total > 0 ? (window.scrollY / total) * 100 : 0;
+            bar.style.width = pct + '%';
+        }, { passive: true });
+
+        // ── Staggered scroll reveal ──
         const io = new IntersectionObserver((entries) => {
             entries.forEach(e => {
-                if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
             });
         }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+        // Auto-assign stagger delays to grid children
+        document.querySelectorAll('.projects-grid, .services-grid, .skills-list, .timeline').forEach(grid => {
+            grid.querySelectorAll('.reveal').forEach((el, i) => {
+                el.setAttribute('data-delay', String((i % 6) + 1));
+            });
+        });
+
         document.querySelectorAll('.reveal').forEach(el => io.observe(el));
         setTimeout(() => {
             document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
         }, 1500);
 
-        // Nav activo en scroll
+        // ── Nav active on scroll ──
         const sections   = document.querySelectorAll('section[id]');
         const navAnchors = document.querySelectorAll('.nav-links a:not(.nav-cta)');
         window.addEventListener('scroll', () => {
             let current = '';
-            sections.forEach(s => { if (window.scrollY >= s.offsetTop - 220) current = s.id; });
+            sections.forEach(s => { if (window.scrollY >= (s as HTMLElement).offsetTop - 220) current = s.id; });
             navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
         }, { passive: true });
+
+        // ── Stats counter animation ──
+        const counters = document.querySelectorAll('.stat-number');
+        const counterIO = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                const el     = e.target as HTMLElement;
+                const target = parseInt(el.dataset.target || '0');
+                const dur    = 1200;
+                const step   = 16;
+                const inc    = target / (dur / step);
+                let current  = 0;
+                const timer  = setInterval(() => {
+                    current += inc;
+                    if (current >= target) { current = target; clearInterval(timer); }
+                    el.textContent = Math.floor(current) + '+';
+                }, step);
+                counterIO.unobserve(el);
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(c => {
+            const val = parseInt((c as HTMLElement).textContent || '0');
+            (c as HTMLElement).dataset.target = String(val);
+            (c as HTMLElement).textContent = '0+';
+            counterIO.observe(c);
+        });
+
+        // ── Project card tilt ──
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const el   = card as HTMLElement;
+                const rect = el.getBoundingClientRect();
+                const x    = (e as MouseEvent).clientX - rect.left;
+                const y    = (e as MouseEvent).clientY - rect.top;
+                const cx   = rect.width  / 2;
+                const cy   = rect.height / 2;
+                const rotX = ((y - cy) / cy) * -5;
+                const rotY = ((x - cx) / cx) *  5;
+                el.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-5px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                (card as HTMLElement).style.transform = '';
+            });
+        });
     </script>
 </body>
 </html>
