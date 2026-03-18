@@ -107,21 +107,53 @@ const {
             counterIO.observe(c);
         });
 
-        // ── Project card tilt ──
+        // ── Project card tilt (lerp suavizado) ──
         document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const el   = card as HTMLElement;
+            const el = card as HTMLElement;
+            let targetX = 0, targetY = 0;
+            let currentX = 0, currentY = 0;
+            let isHovered = false;
+            let rafId = 0;
+
+            const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+            const animate = () => {
+                currentX = lerp(currentX, targetX, 0.1);
+                currentY = lerp(currentY, targetY, 0.1);
+
+                const dx = Math.abs(currentX - targetX);
+                const dy = Math.abs(currentY - targetY);
+
+                el.style.transform = isHovered
+                    ? `perspective(900px) rotateX(${currentX}deg) rotateY(${currentY}deg) translateY(-6px) scale(1.02)`
+                    : `perspective(900px) rotateX(${currentX}deg) rotateY(${currentY}deg) translateY(0px) scale(1)`;
+
+                if (dx > 0.01 || dy > 0.01 || isHovered) {
+                    rafId = requestAnimationFrame(animate);
+                } else {
+                    el.style.transform = '';
+                    cancelAnimationFrame(rafId);
+                }
+            };
+
+            el.addEventListener('mouseenter', () => {
+                isHovered = true;
+                rafId = requestAnimationFrame(animate);
+            });
+
+            el.addEventListener('mousemove', (e) => {
                 const rect = el.getBoundingClientRect();
                 const x    = (e as MouseEvent).clientX - rect.left;
                 const y    = (e as MouseEvent).clientY - rect.top;
-                const cx   = rect.width  / 2;
-                const cy   = rect.height / 2;
-                const rotX = ((y - cy) / cy) * -5;
-                const rotY = ((x - cx) / cx) *  5;
-                el.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-5px)`;
+                targetX    = ((y - rect.height / 2) / rect.height) * -8;
+                targetY    = ((x - rect.width  / 2) / rect.width)  *  8;
             });
-            card.addEventListener('mouseleave', () => {
-                (card as HTMLElement).style.transform = '';
+
+            el.addEventListener('mouseleave', () => {
+                isHovered = false;
+                targetX   = 0;
+                targetY   = 0;
+                rafId = requestAnimationFrame(animate);
             });
         });
     </script>
