@@ -11,27 +11,53 @@ const {
 const siteUrl   = 'https://navacerradavaron.com';
 const ogImage   = `${siteUrl}/logo.svg`;
 
-const jsonLd = {
-    '@context':   'https://schema.org',
-    '@type':      'Person',
-    name:         'Daniel Navacerrada Varón',
-    url:          siteUrl,
-    jobTitle:     'Desarrollador de Software',
-    description:  'Desarrollador de software especializado en .NET, Java y automatización empresarial con N8N. Disponible para proyectos freelance en Madrid.',
-    address: {
-        '@type':           'PostalAddress',
-        addressLocality:   'Madrid',
-        addressCountry:    'ES',
+const jsonLd = [
+    {
+        '@context': 'https://schema.org',
+        '@type':    'WebSite',
+        name:       'Daniel Navacerrada — Desarrollador de Software',
+        url:        siteUrl,
+        description: 'Portfolio de Daniel Navacerrada Varón, desarrollador de software en Madrid especializado en .NET, Java, automatización con N8N y seguridad web.',
+        inLanguage: 'es-ES',
+        author: {
+            '@type': 'Person',
+            name:    'Daniel Navacerrada Varón',
+        },
     },
-    knowsAbout:   ['.NET', 'C#', 'Java', 'SQL Server', 'MySQL', 'N8N', 'OCR', 'Seguridad Web', 'APIs REST'],
-    sameAs:       ['https://www.linkedin.com/in/daniel-navacerrada-var%C3%B3n-9323821b8/'],
-    contactPoint: {
-        '@type':       'ContactPoint',
-        contactType:   'customer service',
-        email:         'info@navacerradavaron.com',
-        availableLanguage: ['Spanish', 'English'],
+    {
+        '@context':  'https://schema.org',
+        '@type':     ['Person', 'ProfessionalService'],
+        name:        'Daniel Navacerrada Varón',
+        url:         siteUrl,
+        image:       `${siteUrl}/logo.svg`,
+        jobTitle:    'Desarrollador de Software Freelance',
+        description: 'Desarrollador de software especializado en .NET, Java y automatización empresarial con N8N. Disponible para proyectos freelance en Madrid.',
+        address: {
+            '@type':           'PostalAddress',
+            addressLocality:   'Madrid',
+            addressRegion:     'Comunidad de Madrid',
+            addressCountry:    'ES',
+        },
+        areaServed: {
+            '@type': 'Country',
+            name:    'España',
+        },
+        knowsAbout: ['.NET', 'C#', 'Java', 'SQL Server', 'MySQL', 'N8N', 'OCR', 'Seguridad Web', 'APIs REST', 'Automatización empresarial'],
+        hasOccupation: {
+            '@type':            'Occupation',
+            name:               'Desarrollador de Software',
+            occupationLocation: { '@type': 'City', name: 'Madrid' },
+            skills:             '.NET, C#, Java, SQL Server, N8N, APIs REST, Seguridad Web',
+        },
+        sameAs:      ['https://www.linkedin.com/in/daniel-navacerrada-var%C3%B3n-9323821b8/'],
+        contactPoint: {
+            '@type':           'ContactPoint',
+            contactType:       'customer service',
+            email:             'info@navacerradavaron.com',
+            availableLanguage: ['Spanish', 'English'],
+        },
     },
-};
+];
 ---
 <!DOCTYPE html>
 <html lang="es">
@@ -39,6 +65,7 @@ const jsonLd = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"  content={description} />
+    <meta name="keywords"     content="desarrollador software Madrid, freelance .NET, desarrollador C# Madrid, automatización N8N, API REST, Java developer Madrid, programador freelance España, seguridad web, SQL Server developer" />
     <meta name="robots"       content="index, follow" />
     <meta name="theme-color"  content="#080810" />
     <meta name="author"       content="Daniel Navacerrada Varón" />
