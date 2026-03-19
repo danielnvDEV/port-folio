@@ -1,12 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" role="img" aria-label="Daniel Navacerrada logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 52" fill="none" role="img" aria-label="Daniel Navacerrada Varón — DNV logo">
   <defs>
-    <linearGradient id="g" x1="4" y1="5" x2="37" y2="35" gradientUnits="userSpaceOnUse">
+    <linearGradient id="g" x1="0" y1="0" x2="50" y2="52" gradientUnits="userSpaceOnUse">
       <stop stop-color="#a78bfa"/>
       <stop offset="1" stop-color="#ec4899"/>
     </linearGradient>
   </defs>
-  <!-- D outer shape + inner hollow (evenodd) -->
-  <path fill-rule="evenodd" fill="url(#g)"
-    d="M4 5 L4 35 L17 35 C33 35 37 27 37 20 C37 13 33 5 17 5 Z
-       M11 12 L11 28 L17 28 C24 28 28 24.5 28 20 C28 15.5 24 12 17 12 Z"/>
+  <!-- D ring con V-tip inferior (fill-rule evenodd: outer - inner = anillo) -->
+  <path fill="url(#g)" fill-rule="evenodd" d="
+    M 6,4  L 6,32  L 25,48  L 44,32
+    C 50,28 50,8 25,4 Z
+    M 13,11 L 13,27  L 25,40  L 37,27
+    C 41,24 41,13 25,11 Z
+  "/>
+  <!-- N: franja diagonal dentro del hueco de la D -->
+  <path fill="url(#g)" d="M 13,11 L 20,11 L 37,27 L 30,27 Z"/>
 </svg>
