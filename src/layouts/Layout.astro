@@ -115,13 +115,32 @@ const jsonLd = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
 
-    <!-- Google Analytics GA4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VB3NSL77SS"></script>
+    <!-- Google Analytics GA4 — carga diferida tras primera interacción -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-VB3NSL77SS');
+        (function() {
+            let loaded = false;
+            function loadGA() {
+                if (loaded) return;
+                loaded = true;
+                ['scroll','click','keydown','touchstart','mousemove'].forEach(function(ev) {
+                    document.removeEventListener(ev, loadGA);
+                });
+                const s = document.createElement('script');
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VB3NSL77SS';
+                s.async = true;
+                document.head.appendChild(s);
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ window.dataLayer.push(arguments); }
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', 'G-VB3NSL77SS');
+            }
+            ['scroll','click','keydown','touchstart','mousemove'].forEach(function(ev) {
+                document.addEventListener(ev, loadGA, { once: true, passive: true });
+            });
+            // Fallback: cargar a los 5 s si no hay interacción
+            setTimeout(loadGA, 5000);
+        })();
     </script>
 
     <!-- JSON-LD Structured Data -->
