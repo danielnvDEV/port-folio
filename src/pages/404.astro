@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="404 — Página no encontrada | Daniel Navacerrada">
+    <style>
+        .not-found {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            gap: 1.5rem;
+        }
+        .not-found-code {
+            font-size: clamp(6rem, 20vw, 12rem);
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .not-found h1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--text);
+            margin: 0;
+        }
+        .not-found p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 400px;
+        }
+        .not-found-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .btn-back {
+            padding: 0.75rem 1.75rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-primary-link {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+        }
+        .btn-primary-link:hover { opacity: 0.85; transform: translateY(-2px); }
+        .btn-ghost-link {
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        .btn-ghost-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    </style>
+    <div class="not-found">
+        <div class="not-found-code">404</div>
+        <h1>Página no encontrada</h1>
+        <p>La página que buscas no existe o ha sido movida.</p>
+        <div class="not-found-actions">
+            <a href="/" class="btn-back btn-primary-link">Volver al inicio</a>
+            <a href="/#contact" class="btn-back btn-ghost-link">Contactar</a>
+        </div>
+    </div>
+</Layout>
