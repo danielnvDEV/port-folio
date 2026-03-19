@@ -1,17 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 52" fill="none" role="img" aria-label="Daniel Navacerrada Varón — DNV logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155 90" fill="none" role="img" aria-label="Daniel Navacerrada Varón — DNV logo">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="50" y2="52" gradientUnits="userSpaceOnUse">
+    <linearGradient id="g" x1="0" y1="0" x2="155" y2="90" gradientUnits="userSpaceOnUse">
       <stop stop-color="#a78bfa"/>
       <stop offset="1" stop-color="#ec4899"/>
     </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <!-- D ring con V-tip inferior (fill-rule evenodd: outer - inner = anillo) -->
-  <path fill="url(#g)" fill-rule="evenodd" d="
-    M 6,4  L 6,32  L 25,48  L 44,32
-    C 50,28 50,8 25,4 Z
-    M 13,11 L 13,27  L 25,40  L 37,27
-    C 41,24 41,13 25,11 Z
+
+  <!-- D -->
+  <path fill="url(#g)" fill-rule="evenodd" filter="url(#glow)" d="
+    M 8,8 L 8,82 L 28,82
+    C 56,82 63,66 63,45
+    C 63,24 56,8  28,8 Z
+    M 18,20 L 18,70 L 28,70
+    C 49,70 53,59 53,45
+    C 53,31 49,20 28,20 Z
   "/>
-  <!-- N: franja diagonal dentro del hueco de la D -->
-  <path fill="url(#g)" d="M 13,11 L 20,11 L 37,27 L 30,27 Z"/>
+
+  <!-- N -->
+  <path fill="url(#g)" filter="url(#glow)"
+        d="M 51,8 L 65,8 L 90,82 L 76,82 Z"/>
+
+  <!-- V izquierdo -->
+  <path fill="url(#g)" filter="url(#glow)"
+        d="M 79,8 L 93,8 L 110,82 L 96,82 Z"/>
+
+  <!-- V derecho -->
+  <path fill="url(#g)" filter="url(#glow)"
+        d="M 96,82 L 110,82 L 145,8 L 131,8 Z"/>
 </svg>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 90" role="img" aria-label="Daniel Navacerrada Varón — Software Developer">
+  <defs>
+    <linearGradient id="gf" x1="0" y1="0" x2="155" y2="90" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#ec4899"/>
+    </linearGradient>
+    <filter id="glowf" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- ── Monograma DNV ── -->
+
+  <!-- D: spine + arc con counter (evenodd) -->
+  <path fill="url(#gf)" fill-rule="evenodd" filter="url(#glowf)" d="
+    M 8,8 L 8,82 L 28,82
+    C 56,82 63,66 63,45
+    C 63,24 56,8  28,8 Z
+    M 18,20 L 18,70 L 28,70
+    C 49,70 53,59 53,45
+    C 53,31 49,20 28,20 Z
+  "/>
+
+  <!-- N: franja diagonal -->
+  <path fill="url(#gf)" filter="url(#glowf)"
+        d="M 51,8 L 65,8 L 90,82 L 76,82 Z"/>
+
+  <!-- V brazo izquierdo -->
+  <path fill="url(#gf)" filter="url(#glowf)"
+        d="M 79,8 L 93,8 L 110,82 L 96,82 Z"/>
+
+  <!-- V brazo derecho -->
+  <path fill="url(#gf)" filter="url(#glowf)"
+        d="M 96,82 L 110,82 L 145,8 L 131,8 Z"/>
+
+  <!-- ── Separador vertical ── -->
+  <line x1="165" y1="14" x2="165" y2="76"
+        stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+
+  <!-- ── Texto ── -->
+  <text x="180" y="37"
+        font-family="'Inter','Helvetica Neue',Arial,sans-serif"
+        font-size="26" font-weight="800" letter-spacing="5"
+        fill="#f8fafc">DANIEL</text>
+
+  <text x="180" y="60"
+        font-family="'Inter','Helvetica Neue',Arial,sans-serif"
+        font-size="15" font-weight="700" letter-spacing="2"
+        fill="#f8fafc">NAVACERRADA VARÓN</text>
+
+  <text x="181" y="76"
+        font-family="'Inter','Helvetica Neue',Arial,sans-serif"
+        font-size="9.5" font-weight="400" letter-spacing="3.5"
+        fill="#94a3b8">SOFTWARE DEVELOPER</text>
+</svg>
