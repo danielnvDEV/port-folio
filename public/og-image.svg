@@ -65,7 +65,7 @@
   <text x="220" y="510" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#475569">navacerradavaron.com</text>
 
   <!-- Available badge -->
-  <rect x="850" y="480" width="240" height="50" rx="25" fill="#10b98120" stroke="#10b981" stroke-width="1.5"/>
+  <rect x="840" y="480" width="270" height="50" rx="25" fill="#10b98120" stroke="#10b981" stroke-width="1.5"/>
   <circle cx="882" cy="505" r="6" fill="#10b981"/>
-  <text x="898" y="511" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#10b981">Disponible para proyectos</text>
+  <text x="898" y="511" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#10b981">Disponible para proyectos</text>
 </svg>
