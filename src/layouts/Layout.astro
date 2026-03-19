@@ -74,12 +74,15 @@ const jsonLd = [
     <link rel="canonical" href={siteUrl} />
 
     <!-- Open Graph -->
-    <meta property="og:type"        content="website" />
-    <meta property="og:url"         content={siteUrl} />
-    <meta property="og:title"       content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:locale"      content="es_ES" />
-    <meta property="og:image"       content={ogImage} />
+    <meta property="og:type"         content="website" />
+    <meta property="og:url"          content={siteUrl} />
+    <meta property="og:title"        content={title} />
+    <meta property="og:description"  content={description} />
+    <meta property="og:locale"       content="es_ES" />
+    <meta property="og:image"        content={ogImage} />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt"    content="Daniel Navacerrada — Desarrollador de Software en Madrid" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
@@ -160,16 +163,9 @@ const jsonLd = [
             document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
         }, 1500);
 
-        // ── Nav active on scroll ──
-        const sections   = document.querySelectorAll('section[id]');
-        const navAnchors = document.querySelectorAll('.nav-links a:not(.nav-cta)');
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(s => { if (window.scrollY >= (s as HTMLElement).offsetTop - 220) current = s.id; });
-            navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
-        }, { passive: true });
+        // Nav active on scroll se gestiona en Nav.astro
 
-        // ── Stats counter animation ──
+        // ── Stats counter animation (requestAnimationFrame) ──
         const counters = document.querySelectorAll('.stat-number');
         const counterIO = new IntersectionObserver((entries) => {
             entries.forEach(e => {
@@ -177,14 +173,13 @@ const jsonLd = [
                 const el     = e.target as HTMLElement;
                 const target = parseInt(el.dataset.target || '0');
                 const dur    = 1200;
-                const step   = 16;
-                const inc    = target / (dur / step);
-                let current  = 0;
-                const timer  = setInterval(() => {
-                    current += inc;
-                    if (current >= target) { current = target; clearInterval(timer); }
-                    el.textContent = Math.floor(current) + '+';
-                }, step);
+                const start  = performance.now();
+                const animate = (now: number) => {
+                    const progress = Math.min((now - start) / dur, 1);
+                    el.textContent = Math.floor(progress * target) + '+';
+                    if (progress < 1) requestAnimationFrame(animate);
+                };
+                requestAnimationFrame(animate);
                 counterIO.unobserve(el);
             });
         }, { threshold: 0.5 });
@@ -223,7 +218,11 @@ const jsonLd = [
             };
 
             el.addEventListener('mouseenter', () => { isHovered = true; rafId = requestAnimationFrame(animate); });
+            let lastMove = 0;
             el.addEventListener('mousemove', (e) => {
+                const now = Date.now();
+                if (now - lastMove < 16) return; // throttle ~60fps
+                lastMove = now;
                 const rect = el.getBoundingClientRect();
                 const x    = (e as MouseEvent).clientX - rect.left;
                 const y    = (e as MouseEvent).clientY - rect.top;

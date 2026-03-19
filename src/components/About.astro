@@ -19,17 +19,17 @@ const skills = [
                 <p>Aprendiz continuo que se mantiene al día con las tendencias tecnológicas y siempre busca mejorar sus habilidades y entregar valor real.</p>
                 <a href="#contact" class="btn-primary" style="margin-top:1.5rem">Hablemos</a>
             </div>
-            <div class="skills-list reveal">
+            <ul class="skills-list reveal" style="list-style:none;padding:0">
                 {skills.map(s => (
-                    <div class="skill-item">
-                        <div class="skill-icon">{s.icon}</div>
+                    <li class="skill-item">
+                        <div class="skill-icon" role="img" aria-label={s.title}>{s.icon}</div>
                         <div class="skill-info">
                             <h4>{s.title}</h4>
                             <p>{s.desc}</p>
                         </div>
-                    </div>
+                    </li>
                 ))}
-            </div>
+            </ul>
         </div>
     </div>
 </section>

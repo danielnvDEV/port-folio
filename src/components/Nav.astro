@@ -36,14 +36,36 @@ const links = [
 <script>
     const btn   = document.getElementById('menuBtn')!;
     const links = document.getElementById('navLinks')!;
+
+    function closeMenu() {
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-label', 'Abrir menú');
+    }
+
     btn.addEventListener('click', () => {
         const isOpen = links.classList.toggle('open');
         btn.setAttribute('aria-expanded', String(isOpen));
         btn.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
     });
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-        links.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        btn.setAttribute('aria-label', 'Abrir menú');
-    }));
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && links.classList.contains('open')) closeMenu();
+    });
+
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    // aria-current en link activo
+    const sections   = document.querySelectorAll('section[id]');
+    const navAnchors = links.querySelectorAll('a:not(.nav-cta)');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => { if (window.scrollY >= (s as HTMLElement).offsetTop - 220) current = s.id; });
+        navAnchors.forEach(a => {
+            const isCurrent = a.getAttribute('href') === '#' + current;
+            a.classList.toggle('active', isCurrent);
+            isCurrent ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current');
+        });
+    }, { passive: true });
 </script>

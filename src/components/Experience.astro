@@ -28,10 +28,10 @@ const jobs = [
         <p class="section-label reveal">Trayectoria</p>
         <h2 class="section-title reveal">Experiencia</h2>
         <p class="section-desc reveal">Mi camino profesional en el desarrollo de software.</p>
-        <div class="timeline">
+        <ol class="timeline" style="list-style:none;padding:0">
             {jobs.map(j => (
-                <div class="timeline-item reveal">
-                    <div class="timeline-dot"></div>
+                <li class="timeline-item reveal">
+                    <div class="timeline-dot" aria-hidden="true"></div>
                     <div class="timeline-period">{j.period}</div>
                     <div class="timeline-role">{j.role}</div>
                     <div class="timeline-company">{j.company}</div>
@@ -39,8 +39,8 @@ const jobs = [
                     <div class="timeline-tags">
                         {j.tags.map(t => <span class="timeline-tag">{t}</span>)}
                     </div>
-                </div>
+                </li>
             ))}
-        </div>
+        </ol>
     </div>
 </section>

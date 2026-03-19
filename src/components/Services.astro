@@ -13,15 +13,15 @@ const services = [
         <p class="section-label reveal">Qué ofrezco</p>
         <h2 class="section-title reveal">Servicios</h2>
         <p class="section-desc reveal">Soluciones técnicas end-to-end, desde el diseño hasta el despliegue.</p>
-        <div class="services-grid">
+        <ul class="services-grid" style="list-style:none;padding:0">
             {services.map(s => (
-                <div class="service-card reveal">
-                    {s.badge && <span class="service-badge">{s.badge}</span>}
-                    <div class="service-icon">{s.icon}</div>
+                <li class="service-card reveal" role="article">
+                    {s.badge && <span class="service-badge" aria-label="Servicio popular">{s.badge}</span>}
+                    <div class="service-icon" role="img" aria-label={s.title}>{s.icon}</div>
                     <h3>{s.title}</h3>
                     <p>{s.desc}</p>
-                </div>
+                </li>
             ))}
-        </div>
+        </ul>
     </div>
 </section>

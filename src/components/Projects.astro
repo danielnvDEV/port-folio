@@ -47,25 +47,25 @@ const projects = [
         <p class="section-label reveal">Mi trabajo</p>
         <h2 class="section-title reveal">Proyectos Destacados</h2>
         <p class="section-desc reveal">Webs y herramientas que he diseñado, desarrollado y desplegado de principio a fin.</p>
-        <div class="projects-grid">
+        <ul class="projects-grid" style="list-style:none;padding:0">
             {projects.map(p => (
-                <div class="project-card reveal">
-                    <div class={`project-thumb ${p.thumb}`}>
-                        <span class="project-icon">{p.icon}</span>
+                <li class="project-card reveal">
+                    <div class={`project-thumb ${p.thumb}`} aria-hidden="true">
+                        <span class="project-icon" role="img" aria-label={p.title}>{p.icon}</span>
                         <div class="project-num">{p.num}</div>
                     </div>
                     <div class="project-body">
                         <h3>{p.title}</h3>
                         <p>{p.desc}</p>
-                        <div class="project-tags">
+                        <div class="project-tags" aria-label="Tecnologías usadas">
                             {p.tags.map(t => <span class="tag">{t}</span>)}
                         </div>
-                        <a href={p.link} target={p.link !== '#' ? '_blank' : undefined} rel={p.link !== '#' ? 'noopener noreferrer' : undefined} class="project-link">
+                        <a href={p.link} target={p.link !== '#' ? '_blank' : undefined} rel={p.link !== '#' ? 'noopener noreferrer' : undefined} class="project-link" aria-label={`${p.linkLabel.replace(' →', '')} — ${p.title}`}>
                             {p.linkLabel}
                         </a>
                     </div>
-                </div>
+                </li>
             ))}
-        </div>
+        </ul>
     </div>
 </section>

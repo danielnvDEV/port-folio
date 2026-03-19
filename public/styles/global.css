@@ -429,16 +429,17 @@ section { width: 100%; position: relative; z-index: 1; }
     flex-direction: column;
     transition: border-color 0.4s cubic-bezier(0.23, 1, 0.32, 1),
                 box-shadow   0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    will-change: transform;
     transform-style: preserve-3d;
 }
 .project-card:hover {
+    will-change: transform;
     border-color: rgba(124,58,237,0.5);
     box-shadow:
         0 8px  20px rgba(0,0,0,0.3),
         0 20px 50px rgba(124,58,237,0.12),
         0 0    0 1px rgba(124,58,237,0.08) inset;
 }
+.project-card:not(:hover) { will-change: auto; }
 .project-thumb {
     height: 140px;
     display: flex;
@@ -588,6 +589,11 @@ section { width: 100%; position: relative; z-index: 1; }
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus { border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+.form-group input:focus-visible,
+.form-group textarea:focus-visible,
+.form-group select:focus-visible { outline: 2px solid var(--primary-light); outline-offset: 2px; }
+.hamburger:focus-visible { outline: 2px solid var(--primary-light); outline-offset: 4px; border-radius: 4px; }
+a:focus-visible { outline: 2px solid var(--primary-light); outline-offset: 3px; border-radius: 3px; }
 .form-group textarea { resize: vertical; min-height: 110px; }
 .form-group select option { background: #1a1a2e; }
 .form-submit { width: 100%; padding: 0.85rem; font-size: 0.9rem; font-weight: 700; margin-top: 0.25rem; }

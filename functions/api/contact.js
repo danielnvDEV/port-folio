@@ -14,6 +14,19 @@ export async function onRequestPost(context) {
         return json({ error: 'Faltan campos obligatorios.' }, 400);
     }
 
+    // Escapar HTML para prevenir XSS en el cuerpo del email
+    const esc = (s) => String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
+    const safeNombre  = esc(nombre);
+    const safeEmail   = esc(email);
+    const safeAsunto  = esc(asunto?.trim() || '');
+    const safeMensaje = esc(mensaje).replace(/\n/g, '<br>');
+
     const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
@@ -24,7 +37,7 @@ export async function onRequestPost(context) {
             from:     'Portfolio <noreply@navacerradavaron.com>',
             to:       'info@navacerradavaron.com',
             reply_to: email,
-            subject:  asunto || 'Nuevo mensaje desde el portfolio',
+            subject:  safeAsunto || 'Nuevo mensaje desde el portfolio',
             html: `
                 <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
                     <div style="padding:8px 24px;background:#7c3aed">
@@ -34,23 +47,23 @@ export async function onRequestPost(context) {
                         <table style="width:100%;border-collapse:collapse;font-size:14px">
                             <tr>
                                 <td style="padding:10px 0;color:#6b7280;width:80px;vertical-align:top;border-bottom:1px solid #f3f4f6">Nombre</td>
-                                <td style="padding:10px 0;color:#111827;font-weight:600;border-bottom:1px solid #f3f4f6">${nombre}</td>
+                                <td style="padding:10px 0;color:#111827;font-weight:600;border-bottom:1px solid #f3f4f6">${safeNombre}</td>
                             </tr>
                             <tr>
                                 <td style="padding:10px 0;color:#6b7280;vertical-align:top;border-bottom:1px solid #f3f4f6">Email</td>
-                                <td style="padding:10px 0;border-bottom:1px solid #f3f4f6"><a href="mailto:${email}" style="color:#7c3aed;text-decoration:none">${email}</a></td>
+                                <td style="padding:10px 0;border-bottom:1px solid #f3f4f6"><a href="mailto:${safeEmail}" style="color:#7c3aed;text-decoration:none">${safeEmail}</a></td>
                             </tr>
                             <tr>
                                 <td style="padding:10px 0;color:#6b7280;vertical-align:top">Asunto</td>
-                                <td style="padding:10px 0;color:#111827">${asunto || '—'}</td>
+                                <td style="padding:10px 0;color:#111827">${safeAsunto || '—'}</td>
                             </tr>
                         </table>
                         <div style="margin-top:20px;padding:16px;background:#f9fafb;border-left:3px solid #7c3aed;border-radius:0 4px 4px 0;font-size:14px;line-height:1.7;color:#374151">
-                            ${mensaje.replace(/\n/g, '<br>')}
+                            ${safeMensaje}
                         </div>
                     </div>
                     <div style="padding:12px 24px;background:#f9fafb;border-top:1px solid #e5e7eb">
-                        <p style="margin:0;font-size:12px;color:#9ca3af">Responde a este email para contestar directamente a ${nombre}.</p>
+                        <p style="margin:0;font-size:12px;color:#9ca3af">Responde a este email para contestar directamente a ${safeNombre}.</p>
                     </div>
                 </div>
             `,
