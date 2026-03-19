@@ -5,7 +5,7 @@ interface Props {
 }
 const {
     title       = 'Daniel Navacerrada — Desarrollador de Software en Madrid',
-    description = 'Daniel Navacerrada, desarrollador .NET y Java en Madrid. Automatización N8N, seguridad web y APIs REST. Disponible para proyectos freelance.',
+    description = 'Daniel Navacerrada, desarrollador web freelance en Madrid. Creo o mejoro tu web: .NET, Java, SEO, rendimiento y seguridad. Presupuesto sin compromiso.',
 } = Astro.props;
 
 const siteUrl   = 'https://navacerradavaron.com';
@@ -42,13 +42,19 @@ const jsonLd = [
             '@type': 'Country',
             name:    'España',
         },
-        knowsAbout: ['.NET', 'C#', 'Java', 'SQL Server', 'MySQL', 'N8N', 'OCR', 'Seguridad Web', 'APIs REST', 'Automatización empresarial'],
+        knowsAbout: ['.NET', 'C#', 'Java', 'SQL Server', 'MySQL', 'N8N', 'OCR', 'Seguridad Web', 'APIs REST', 'Automatización empresarial', 'Desarrollo Web', 'Optimización Web', 'SEO técnico'],
         hasOccupation: {
             '@type':            'Occupation',
-            name:               'Desarrollador de Software',
+            name:               'Desarrollador Web Freelance',
             occupationLocation: { '@type': 'City', name: 'Madrid' },
-            skills:             '.NET, C#, Java, SQL Server, N8N, APIs REST, Seguridad Web',
+            skills:             '.NET, C#, Java, SQL Server, N8N, APIs REST, Seguridad Web, Desarrollo Web, Optimización Web, SEO técnico',
         },
+        makesOffer: [
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Desarrollo de sitios web', description: 'Diseño y desarrollo web completo desde cero, con despliegue incluido.' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Optimización y mejora web', description: 'Análisis y mejora de webs existentes: rendimiento, SEO, accesibilidad y seguridad.' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Desarrollo Backend .NET / Java', description: 'APIs REST escalables con arquitectura limpia y documentación Swagger.' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Automatización con N8N', description: 'Flujos automatizados con N8N, OCR y procesamiento inteligente de documentos.' } },
+        ],
         sameAs:      ['https://www.linkedin.com/in/daniel-navacerrada-var%C3%B3n-9323821b8/'],
         contactPoint: {
             '@type':           'ContactPoint',
@@ -65,7 +71,7 @@ const jsonLd = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"  content={description} />
-    <meta name="keywords"     content="desarrollador software Madrid, freelance .NET, desarrollador C# Madrid, automatización N8N, API REST, Java developer Madrid, programador freelance España, seguridad web, SQL Server developer" />
+    <meta name="keywords"     content="desarrollador web Madrid, crear web Madrid, mejorar web existente, freelance .NET, desarrollador C# Madrid, automatización N8N, API REST, Java developer Madrid, programador freelance España, seguridad web, optimización web SEO, diseño web freelance Madrid" />
     <meta name="robots"       content="index, follow" />
     <meta name="theme-color"  content="#080810" />
     <meta name="author"       content="Daniel Navacerrada Varón" />

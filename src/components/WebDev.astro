@@ -1,0 +1,255 @@
+---
+const offerings = [
+    {
+        icon: '🚀',
+        label: 'Desde cero',
+        title: 'Desarrollo de tu web',
+        desc: 'Diseño y desarrollo tu web completa: desde la idea hasta el despliegue en producción bajo tu dominio. Diseño responsivo, rendimiento optimizado y código limpio y mantenible.',
+        features: [
+            'Diseño adaptado a tu marca e identidad',
+            'Optimización para móvil, tablet y escritorio',
+            'SEO técnico incluido desde el primer día',
+            'Despliegue y configuración del dominio',
+            'Velocidad y Core Web Vitals optimizados',
+        ],
+        accent: 'var(--primary-light)',
+        bg: 'rgba(124,58,237,0.06)',
+        border: 'rgba(124,58,237,0.25)',
+    },
+    {
+        icon: '⚡',
+        label: 'Mejora tu web',
+        title: 'Optimización de web existente',
+        desc: 'Si ya tienes web pero no rinde como debería, la analizo y mejoro: velocidad, posicionamiento SEO, accesibilidad, seguridad o rediseño parcial o total.',
+        features: [
+            'Auditoría completa de rendimiento y SEO',
+            'Mejora de velocidad de carga (LCP, CLS, INP)',
+            'Corrección de errores y vulnerabilidades',
+            'Rediseño parcial o total manteniendo tu marca',
+            'Accesibilidad WCAG y compatibilidad móvil',
+        ],
+        accent: '#ec4899',
+        bg: 'rgba(236,72,153,0.06)',
+        border: 'rgba(236,72,153,0.25)',
+    },
+];
+---
+<section id="webdev" aria-labelledby="webdev-title">
+    <div class="container">
+        <p class="section-label reveal">Desarrollo web</p>
+        <h2 class="section-title reveal" id="webdev-title">¿Necesitas una web o mejorar la que tienes?</h2>
+        <p class="section-desc reveal">
+            Tanto si partes de cero como si ya tienes presencia online, te ayudo a tener una web que funcione, cargue rápido y posicione bien.
+        </p>
+
+        <div class="webdev-grid">
+            {offerings.map(o => (
+                <article class="webdev-card reveal" style={`--card-accent:${o.accent};--card-bg:${o.bg};--card-border:${o.border}`}>
+                    <div class="webdev-card-header">
+                        <span class="webdev-label">{o.label}</span>
+                        <span class="webdev-icon" role="img" aria-label={o.label}>{o.icon}</span>
+                    </div>
+                    <h3>{o.title}</h3>
+                    <p class="webdev-desc">{o.desc}</p>
+                    <ul class="webdev-features" aria-label={`Características de ${o.title}`}>
+                        {o.features.map(f => (
+                            <li>
+                                <span class="webdev-check" aria-hidden="true">✓</span>
+                                {f}
+                            </li>
+                        ))}
+                    </ul>
+                    <a href="#contact" class="webdev-cta" aria-label={`Solicitar presupuesto — ${o.title}`}>
+                        Solicitar presupuesto →
+                    </a>
+                </article>
+            ))}
+        </div>
+
+        <div class="webdev-process reveal">
+            <p class="webdev-process-title">¿Cómo trabajo?</p>
+            <ol class="webdev-steps" aria-label="Proceso de trabajo">
+                <li class="webdev-step">
+                    <span class="step-num" aria-hidden="true">01</span>
+                    <strong>Consulta inicial</strong>
+                    <span>Analizamos juntos qué necesitas y cuál es el mejor enfoque para tu proyecto.</span>
+                </li>
+                <li class="webdev-step">
+                    <span class="step-num" aria-hidden="true">02</span>
+                    <strong>Propuesta y presupuesto</strong>
+                    <span>Te envío un presupuesto detallado sin compromiso, con plazos claros.</span>
+                </li>
+                <li class="webdev-step">
+                    <span class="step-num" aria-hidden="true">03</span>
+                    <strong>Desarrollo</strong>
+                    <span>Trabajo con actualizaciones periódicas para que veas el progreso en todo momento.</span>
+                </li>
+                <li class="webdev-step">
+                    <span class="step-num" aria-hidden="true">04</span>
+                    <strong>Entrega y soporte</strong>
+                    <span>Despliegue en producción, formación básica y soporte post-entrega incluido.</span>
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<style>
+#webdev {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+}
+.webdev-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+}
+.webdev-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.webdev-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+}
+.webdev-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.webdev-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--card-accent);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+}
+.webdev-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+.webdev-card h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+}
+.webdev-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin: 0;
+}
+.webdev-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    flex-grow: 1;
+}
+.webdev-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+.webdev-check {
+    color: var(--card-accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.webdev-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--card-accent);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 0.5rem;
+    transition: gap 0.3s;
+}
+.webdev-cta:hover { gap: 0.7rem; }
+
+/* Process */
+.webdev-process {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+}
+.webdev-process-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary-light);
+    margin-bottom: 1.5rem;
+}
+.webdev-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: steps;
+}
+.webdev-step {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    position: relative;
+}
+.webdev-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 0.9rem;
+    right: -0.75rem;
+    width: 1.5rem;
+    height: 1px;
+    background: var(--border);
+}
+.step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    opacity: 0.7;
+}
+.webdev-step strong {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+.webdev-step span:last-child {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .webdev-grid { grid-template-columns: 1fr; }
+    .webdev-steps { grid-template-columns: 1fr 1fr; }
+    .webdev-step:not(:last-child)::after { display: none; }
+    .webdev-process { padding: 1.5rem; }
+}
+@media (max-width: 480px) {
+    .webdev-steps { grid-template-columns: 1fr; }
+}
+</style>
