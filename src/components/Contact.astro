@@ -34,15 +34,23 @@ const socials = [
                 </div>
             </div>
 
-            <form class="contact-form reveal" id="contactForm">
+            <form class="contact-form reveal" id="contactForm" novalidate aria-label="Formulario de contacto">
+                <!-- Honeypot anti-spam (oculto para humanos) -->
+                <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
+                    <label for="website">No rellenar</label>
+                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+                </div>
+
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" placeholder="Tu nombre" required />
+                        <label for="nombre">Nombre <span class="field-required" aria-label="requerido">*</span></label>
+                        <input type="text" id="nombre" placeholder="Tu nombre" required autocomplete="name" />
+                        <span class="field-error" id="error-nombre" role="alert"></span>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="tu@email.com" required />
+                        <label for="email">Email <span class="field-required" aria-label="requerido">*</span></label>
+                        <input type="email" id="email" placeholder="tu@email.com" required autocomplete="email" />
+                        <span class="field-error" id="error-email" role="alert"></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -58,8 +66,9 @@ const socials = [
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="mensaje">Mensaje</label>
+                    <label for="mensaje">Mensaje <span class="field-required" aria-label="requerido">*</span></label>
                     <textarea id="mensaje" placeholder="Cuéntame sobre tu proyecto..." required></textarea>
+                    <span class="field-error" id="error-mensaje" role="alert"></span>
                 </div>
                 <button type="submit" class="btn-primary form-submit">Enviar mensaje ✉️</button>
             </form>
@@ -68,16 +77,59 @@ const socials = [
 </section>
 
 <script>
-    const form = document.getElementById('contactForm') as HTMLFormElement;
+    const form    = document.getElementById('contactForm') as HTMLFormElement;
+    const nombre  = document.getElementById('nombre')  as HTMLInputElement;
+    const email   = document.getElementById('email')   as HTMLInputElement;
+    const mensaje = document.getElementById('mensaje') as HTMLTextAreaElement;
+
+    function showError(id: string, msg: string) {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = msg; el.previousElementSibling?.classList.add('field-invalid'); }
+    }
+    function clearError(id: string) {
+        const el = document.getElementById(id);
+        if (el) { el.textContent = ''; el.previousElementSibling?.classList.remove('field-invalid'); }
+    }
+    function validateEmail(v: string) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+    // Validación en tiempo real
+    nombre.addEventListener('blur', () => {
+        if (!nombre.value.trim()) showError('error-nombre', 'El nombre es obligatorio');
+        else clearError('error-nombre');
+    });
+    email.addEventListener('blur', () => {
+        if (!email.value.trim()) showError('error-email', 'El email es obligatorio');
+        else if (!validateEmail(email.value.trim())) showError('error-email', 'Introduce un email válido');
+        else clearError('error-email');
+    });
+    mensaje.addEventListener('blur', () => {
+        if (!mensaje.value.trim()) showError('error-mensaje', 'El mensaje es obligatorio');
+        else if (mensaje.value.trim().length < 10) showError('error-mensaje', 'El mensaje es demasiado corto');
+        else clearError('error-mensaje');
+    });
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const btn = form.querySelector('button[type=submit]') as HTMLButtonElement;
+        const btn      = form.querySelector('button[type=submit]') as HTMLButtonElement;
+        const honeypot = (document.getElementById('website') as HTMLInputElement).value;
+
+        // Anti-spam: si el honeypot tiene valor, silenciosamente ignorar
+        if (honeypot) { btn.textContent = '✅ ¡Mensaje enviado!'; form.reset(); return; }
+
+        // Validación final
+        let valid = true;
+        if (!nombre.value.trim())               { showError('error-nombre',  'El nombre es obligatorio'); valid = false; }
+        if (!email.value.trim())                { showError('error-email',   'El email es obligatorio');  valid = false; }
+        else if (!validateEmail(email.value))   { showError('error-email',   'Introduce un email válido'); valid = false; }
+        if (!mensaje.value.trim())              { showError('error-mensaje', 'El mensaje es obligatorio'); valid = false; }
+        else if (mensaje.value.trim().length < 10) { showError('error-mensaje', 'El mensaje es demasiado corto'); valid = false; }
+        if (!valid) return;
 
         const payload = {
-            nombre:  (document.getElementById('nombre')  as HTMLInputElement).value.trim(),
-            email:   (document.getElementById('email')   as HTMLInputElement).value.trim(),
-            asunto:  (document.getElementById('asunto')  as HTMLSelectElement).value,
-            mensaje: (document.getElementById('mensaje') as HTMLTextAreaElement).value.trim(),
+            nombre:  nombre.value.trim(),
+            email:   email.value.trim(),
+            asunto:  (document.getElementById('asunto') as HTMLSelectElement).value,
+            mensaje: mensaje.value.trim(),
         };
 
         btn.textContent = 'Enviando...';

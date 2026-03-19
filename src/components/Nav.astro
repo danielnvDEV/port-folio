@@ -8,10 +8,10 @@ const links = [
     { href: '#contact',    label: 'Contacto' },
 ];
 ---
-<nav>
+<nav aria-label="Navegación principal">
     <div class="nav-container">
-        <a href="#hero" class="logo" aria-label="Inicio">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" width="32" height="32">
+        <a href="#hero" class="logo" aria-label="Daniel Navacerrada — Inicio">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" width="32" height="32" aria-hidden="true">
                 <defs>
                     <linearGradient id="navG" x1="4" y1="5" x2="37" y2="35" gradientUnits="userSpaceOnUse">
                         <stop stop-color="#a78bfa"/>
@@ -23,10 +23,10 @@ const links = [
                        M11 12 L11 28 L17 28 C24 28 28 24.5 28 20 C28 15.5 24 12 17 12 Z"/>
             </svg>
         </a>
-        <button class="hamburger" id="menuBtn" aria-label="Menú">
+        <button class="hamburger" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
             <span></span><span></span><span></span>
         </button>
-        <ul class="nav-links" id="navLinks">
+        <ul class="nav-links" id="navLinks" role="list">
             {links.map(l => <li><a href={l.href}>{l.label}</a></li>)}
             <li><a href="#contact" class="nav-cta">Contactar</a></li>
         </ul>
@@ -36,6 +36,14 @@ const links = [
 <script>
     const btn   = document.getElementById('menuBtn')!;
     const links = document.getElementById('navLinks')!;
-    btn.addEventListener('click', () => links.classList.toggle('open'));
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+    btn.addEventListener('click', () => {
+        const isOpen = links.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(isOpen));
+        btn.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+    });
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-label', 'Abrir menú');
+    }));
 </script>
