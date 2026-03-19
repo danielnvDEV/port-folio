@@ -69,12 +69,25 @@ const links = [
 
     links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
-    // aria-current en link activo
+    // aria-current en link activo (offsetTop cacheado para evitar reflow en cada scroll)
     const sections   = document.querySelectorAll('section[id]');
     const navAnchors = links.querySelectorAll('a:not(.nav-cta)');
+
+    type SectionTop = { id: string; top: number };
+    let sectionTops: SectionTop[] = [];
+
+    function cacheSectionTops() {
+        sectionTops = Array.from(sections).map(s => ({
+            id:  s.id,
+            top: (s as HTMLElement).offsetTop,
+        }));
+    }
+    cacheSectionTops();
+    window.addEventListener('resize', cacheSectionTops, { passive: true });
+
     window.addEventListener('scroll', () => {
         let current = '';
-        sections.forEach(s => { if (window.scrollY >= (s as HTMLElement).offsetTop - 220) current = s.id; });
+        sectionTops.forEach(({ id, top }) => { if (window.scrollY >= top - 220) current = id; });
         navAnchors.forEach(a => {
             const isCurrent = a.getAttribute('href') === '#' + current;
             a.classList.toggle('active', isCurrent);

@@ -110,10 +110,16 @@ const jsonLd = [
 
     <title>{title}</title>
 
-    <!-- Fuentes Google (preconnect + stylesheet, evita @import bloqueante) -->
+    <!-- Fuentes Google — carga no bloqueante (media trick) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <link rel="preload" as="style"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" media="print" onload="this.media='all'"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+    </noscript>
 
     <!-- Google Analytics GA4 — carga diferida tras primera interacción -->
     <script>
@@ -163,11 +169,14 @@ const jsonLd = [
     </main>
 
     <script>
-        // ── Scroll progress bar ──
+        // ── Scroll progress bar (scrollHeight cacheado, sin reflow en cada scroll) ──
         const bar = document.getElementById('scrollProgress')!;
+        let totalHeight = document.body.scrollHeight - window.innerHeight;
+        window.addEventListener('resize', () => {
+            totalHeight = document.body.scrollHeight - window.innerHeight;
+        }, { passive: true });
         window.addEventListener('scroll', () => {
-            const total  = document.body.scrollHeight - window.innerHeight;
-            const pct    = total > 0 ? (window.scrollY / total) * 100 : 0;
+            const pct = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
             bar.style.width = pct + '%';
         }, { passive: true });
 
