@@ -379,7 +379,7 @@ section { width: 100%; position: relative; z-index: 1; }
     flex-shrink: 0;
     font-family: 'JetBrains Mono', monospace;
 }
-.skill-info h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.2rem; }
+.skill-info h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.2rem; }
 .skill-info p { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; }
 
 /* ── EXPERIENCE ── */
@@ -499,7 +499,6 @@ section { width: 100%; position: relative; z-index: 1; }
 .project-link:hover { gap: 0.7rem; }
 
 /* ── SERVICES ── */
-#services { background: var(--bg); }
 .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.1rem; }
 .service-card {
     background: var(--bg-card);

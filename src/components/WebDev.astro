@@ -33,11 +33,20 @@ const offerings = [
         border: 'rgba(236,72,153,0.25)',
     },
 ];
+
+const capabilities = [
+    { icon: '🏗️', title: 'Desarrollo Backend',  desc: 'APIs escalables, microservicios y sistemas robustos con .NET y Node.js.', badge: 'Popular' },
+    { icon: '🔐', title: 'Seguridad Web',        desc: 'Auditorías y remediación de vulnerabilidades OWASP Top 10.' },
+    { icon: '⚡', title: 'Automatización',        desc: 'Flujos automatizados con N8N, OCR y procesamiento de documentos.' },
+    { icon: '📊', title: 'Bases de Datos',        desc: 'Diseño, optimización y administración de SQL Server y MySQL.' },
+    { icon: '🌐', title: 'Full Stack',            desc: 'Desarrollo completo de aplicaciones web responsivas de alto rendimiento.' },
+    { icon: '⚙️', title: 'DevOps & Infra',        desc: 'Gestión de infraestructura, self-hosting y optimización de servidores.' },
+];
 ---
-<section id="webdev" aria-labelledby="webdev-title">
+<section id="services" aria-labelledby="services-title">
     <div class="container">
-        <p class="section-label reveal">Desarrollo web</p>
-        <h2 class="section-title reveal" id="webdev-title">¿Necesitas una web o mejorar la que tienes?</h2>
+        <p class="section-label reveal">Qué ofrezco</p>
+        <h2 class="section-title reveal" id="services-title">¿Necesitas una web o mejorar la que tienes?</h2>
         <p class="section-desc reveal">
             Tanto si partes de cero como si ya tienes presencia online, te ayudo a tener una web que funcione, cargue rápido y posicione bien.
         </p>
@@ -91,11 +100,25 @@ const offerings = [
                 </li>
             </ol>
         </div>
+
+        <div class="capabilities-wrap reveal">
+            <p class="webdev-process-title">Otras especialidades</p>
+            <ul class="services-grid" style="list-style:none;padding:0">
+                {capabilities.map(s => (
+                    <li class="service-card reveal" role="article">
+                        {s.badge && <span class="service-badge" aria-label="Servicio popular">{s.badge}</span>}
+                        <div class="service-icon" role="img" aria-label={s.title}>{s.icon}</div>
+                        <h3>{s.title}</h3>
+                        <p>{s.desc}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
     </div>
 </section>
 
 <style>
-#webdev {
+#services {
     background: var(--bg);
     border-top: 1px solid var(--border);
 }
@@ -193,6 +216,7 @@ const offerings = [
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 2rem 2.5rem;
+    margin-bottom: 3.5rem;
 }
 .webdev-process-title {
     font-size: 0.75rem;
@@ -241,6 +265,14 @@ const offerings = [
     font-size: 0.8rem;
     color: var(--text-secondary);
     line-height: 1.6;
+}
+
+/* Capabilities subsection */
+.capabilities-wrap {
+    margin-top: 0;
+}
+.capabilities-wrap .webdev-process-title {
+    margin-bottom: 1.25rem;
 }
 
 @media (max-width: 768px) {
