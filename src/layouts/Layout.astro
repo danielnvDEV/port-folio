@@ -1,24 +1,21 @@
 ---
-interface Props {
-    title?: string;
-    description?: string;
-}
-const {
-    title       = 'Daniel Navacerrada — Desarrollador de Software en Madrid',
-    description = 'Daniel Navacerrada, desarrollador web freelance en Madrid. Creo o mejoro tu web: .NET, Java, SEO, rendimiento y seguridad. Presupuesto sin compromiso.',
-} = Astro.props;
+import { useTranslations } from '../i18n/translations';
+
+const locale = Astro.currentLocale ?? 'es';
+const t      = useTranslations(locale);
 
 const siteUrl   = 'https://navacerradavaron.com';
+const canonicalUrl = locale === 'en' ? `${siteUrl}/en/` : `${siteUrl}/`;
 const ogImage   = `${siteUrl}/og-image.svg`;
 
 const jsonLd = [
     {
-        '@context': 'https://schema.org',
-        '@type':    'WebSite',
-        name:       'Daniel Navacerrada — Desarrollador de Software',
-        url:        siteUrl,
-        description: 'Portfolio de Daniel Navacerrada Varón, desarrollador de software en Madrid especializado en .NET, Java, automatización con N8N y seguridad web.',
-        inLanguage: 'es-ES',
+        '@context':  'https://schema.org',
+        '@type':     'WebSite',
+        name:        t.meta.jsonLd.websiteName,
+        url:         canonicalUrl,
+        description: t.meta.jsonLd.websiteDesc,
+        inLanguage:  locale === 'en' ? 'en' : 'es-ES',
         author: {
             '@type': 'Person',
             name:    'Daniel Navacerrada Varón',
@@ -28,10 +25,10 @@ const jsonLd = [
         '@context':  'https://schema.org',
         '@type':     ['Person', 'ProfessionalService'],
         name:        'Daniel Navacerrada Varón',
-        url:         siteUrl,
+        url:         canonicalUrl,
         image:       `${siteUrl}/logo.svg`,
-        jobTitle:    'Desarrollador de Software Freelance',
-        description: 'Desarrollador de software especializado en .NET, Java y automatización empresarial con N8N. Disponible para proyectos freelance en Madrid.',
+        jobTitle:    t.meta.jsonLd.jobTitle,
+        description: t.meta.jsonLd.personDesc,
         address: {
             '@type':           'PostalAddress',
             addressLocality:   'Madrid',
@@ -40,60 +37,63 @@ const jsonLd = [
         },
         areaServed: {
             '@type': 'Country',
-            name:    'España',
+            name:    t.meta.jsonLd.areaServed,
         },
-        knowsAbout: ['.NET', 'C#', 'Java', 'SQL Server', 'MySQL', 'N8N', 'OCR', 'Seguridad Web', 'APIs REST', 'Automatización empresarial', 'Desarrollo Web', 'Optimización Web', 'SEO técnico'],
+        knowsAbout: ['.NET', 'C#', 'Java', 'SQL Server', 'MySQL', 'N8N', 'OCR', 'Web Security', 'REST APIs', 'Business Automation', 'Web Development', 'Web Optimisation', 'Technical SEO'],
         hasOccupation: {
             '@type':            'Occupation',
-            name:               'Desarrollador Web Freelance',
+            name:               t.meta.jsonLd.occupation,
             occupationLocation: { '@type': 'City', name: 'Madrid' },
-            skills:             '.NET, C#, Java, SQL Server, N8N, APIs REST, Seguridad Web, Desarrollo Web, Optimización Web, SEO técnico',
+            skills:             t.meta.jsonLd.skills,
         },
-        makesOffer: [
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Desarrollo de sitios web', description: 'Diseño y desarrollo web completo desde cero, con despliegue incluido.' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Optimización y mejora web', description: 'Análisis y mejora de webs existentes: rendimiento, SEO, accesibilidad y seguridad.' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Desarrollo Backend .NET / Java', description: 'APIs REST escalables con arquitectura limpia y documentación Swagger.' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Automatización con N8N', description: 'Flujos automatizados con N8N, OCR y procesamiento inteligente de documentos.' } },
-        ],
-        sameAs:      ['https://www.linkedin.com/in/daniel-navacerrada-var%C3%B3n-9323821b8/'],
+        makesOffer: t.meta.jsonLd.offers.map(o => ({
+            '@type':      'Offer',
+            itemOffered:  { '@type': 'Service', name: o.name, description: o.desc },
+        })),
+        sameAs:       ['https://www.linkedin.com/in/daniel-navacerrada-var%C3%B3n-9323821b8/'],
         contactPoint: {
             '@type':           'ContactPoint',
-            contactType:       'customer service',
+            contactType:       t.meta.jsonLd.contactType,
             email:             'info@navacerradavaron.com',
-            availableLanguage: ['Spanish', 'English'],
+            availableLanguage: t.meta.jsonLd.langAvailable,
         },
     },
 ];
 ---
 <!DOCTYPE html>
-<html lang="es">
+<html lang={locale}>
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description"  content={description} />
-    <meta name="keywords"     content="desarrollador web Madrid, crear web Madrid, mejorar web existente, freelance .NET, desarrollador C# Madrid, automatización N8N, API REST, Java developer Madrid, programador freelance España, seguridad web, optimización web SEO, diseño web freelance Madrid" />
+    <meta name="description"  content={t.meta.description} />
+    <meta name="keywords"     content={t.meta.keywords} />
     <meta name="robots"       content="index, follow" />
     <meta name="theme-color"  content="#080810" />
     <meta name="author"       content="Daniel Navacerrada Varón" />
 
     <!-- Canonical -->
-    <link rel="canonical" href={siteUrl} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- hreflang (SEO multilingüe) -->
+    <link rel="alternate" hreflang="es"        href={`${siteUrl}/`} />
+    <link rel="alternate" hreflang="en"        href={`${siteUrl}/en/`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}/`} />
 
     <!-- Open Graph -->
     <meta property="og:type"         content="website" />
-    <meta property="og:url"          content={siteUrl} />
-    <meta property="og:title"        content={title} />
-    <meta property="og:description"  content={description} />
-    <meta property="og:locale"       content="es_ES" />
+    <meta property="og:url"          content={canonicalUrl} />
+    <meta property="og:title"        content={t.meta.title} />
+    <meta property="og:description"  content={t.meta.description} />
+    <meta property="og:locale"       content={locale === 'en' ? 'en_GB' : 'es_ES'} />
     <meta property="og:image"        content={ogImage} />
     <meta property="og:image:width"  content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt"    content="Daniel Navacerrada — Desarrollador de Software en Madrid" />
+    <meta property="og:image:alt"    content={t.meta.ogAlt} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
-    <meta name="twitter:title"       content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title"       content={t.meta.title} />
+    <meta name="twitter:description" content={t.meta.description} />
     <meta name="twitter:image"       content={ogImage} />
 
     <!-- Favicon -->
@@ -108,7 +108,7 @@ const jsonLd = [
     <link rel="preload" href="/styles/global.css" as="style" />
     <link rel="stylesheet" href="/styles/global.css" />
 
-    <title>{title}</title>
+    <title>{t.meta.title}</title>
 
     <!-- Fuentes Google — carga no bloqueante (media trick) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -144,7 +144,6 @@ const jsonLd = [
             ['scroll','click','keydown','touchstart','mousemove'].forEach(function(ev) {
                 document.addEventListener(ev, loadGA, { once: true, passive: true });
             });
-            // Fallback: cargar a los 5 s si no hay interacción
             setTimeout(loadGA, 5000);
         })();
     </script>
@@ -154,10 +153,13 @@ const jsonLd = [
 </head>
 <body>
     <!-- Skip to content (accesibilidad teclado) -->
-    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    <a href="#main-content" class="skip-link">
+        {locale === 'en' ? 'Skip to main content' : 'Saltar al contenido principal'}
+    </a>
 
     <!-- Scroll progress bar -->
-    <div class="scroll-progress" id="scrollProgress" role="progressbar" aria-label="Progreso de lectura"></div>
+    <div class="scroll-progress" id="scrollProgress" role="progressbar"
+         aria-label={locale === 'en' ? 'Reading progress' : 'Progreso de lectura'}></div>
 
     <!-- Background blobs -->
     <div class="blob blob-1" aria-hidden="true"></div>
@@ -200,8 +202,6 @@ const jsonLd = [
         setTimeout(() => {
             document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
         }, 1500);
-
-        // Nav active on scroll se gestiona en Nav.astro
 
         // ── Stats counter animation (requestAnimationFrame) ──
         const counters = document.querySelectorAll('.stat-number');
@@ -259,7 +259,7 @@ const jsonLd = [
             let lastMove = 0;
             el.addEventListener('mousemove', (e) => {
                 const now = Date.now();
-                if (now - lastMove < 16) return; // throttle ~60fps
+                if (now - lastMove < 16) return;
                 lastMove = now;
                 const rect = el.getBoundingClientRect();
                 const x    = (e as MouseEvent).clientX - rect.left;

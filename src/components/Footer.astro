@@ -1,14 +1,17 @@
 ---
-const links = ['Sobre mí', 'Proyectos', 'Servicios', 'Experiencia', 'Contacto'];
-const hrefs = ['#about', '#projects', '#services', '#experience', '#contact'];
+import { useTranslations } from '../i18n/translations';
+
+const locale = Astro.currentLocale ?? 'es';
+const t      = useTranslations(locale);
+const f      = t.footer;
 ---
 <footer>
     <div class="footer-inner">
         <div class="footer-copy">
-            <p>© 2026 <span>Daniel Navacerrada Varón</span></p>
+            <p>{f.copy} <span>Daniel Navacerrada Varón</span></p>
         </div>
         <ul class="footer-links">
-            {links.map((l, i) => <li><a href={hrefs[i]}>{l}</a></li>)}
+            {f.links.map(l => <li><a href={l.href}>{l.label}</a></li>)}
         </ul>
     </div>
 </footer>

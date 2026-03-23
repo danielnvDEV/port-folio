@@ -1,4 +1,11 @@
 ---
+import { useTranslations } from '../i18n/translations';
+
+const locale = Astro.currentLocale ?? 'es';
+const t      = useTranslations(locale);
+const c      = t.contact;
+const f      = c.form;
+
 const socials = [
     {
         title: 'LinkedIn',
@@ -9,23 +16,23 @@ const socials = [
 ---
 <section id="contact">
     <div class="container">
-        <p class="section-label reveal">Hablemos</p>
-        <h2 class="section-title reveal">¿Tienes un proyecto?</h2>
+        <p class="section-label reveal">{c.label}</p>
+        <h2 class="section-title reveal">{c.title}</h2>
         <div class="contact-wrapper">
             <div class="contact-info-col reveal">
-                <h3>Estoy disponible para nuevos proyectos</h3>
-                <p>Si tienes una idea, necesitas un desarrollador o simplemente quieres hablar de tecnología, escríbeme. Suelo responder en menos de 24 horas.</p>
+                <h3>{c.h3}</h3>
+                <p>{c.p}</p>
                 <div class="contact-detail">
-                    <div class="contact-detail-icon" role="img" aria-label="Ubicación">📍</div>
-                    <div><span>Ubicación</span><strong>Madrid, España</strong></div>
+                    <div class="contact-detail-icon" role="img" aria-label={c.details.location.label}>📍</div>
+                    <div><span>{c.details.location.label}</span><strong>{c.details.location.value}</strong></div>
                 </div>
                 <div class="contact-detail">
-                    <div class="contact-detail-icon" role="img" aria-label="Disponibilidad">🕐</div>
-                    <div><span>Disponibilidad</span><strong>Freelance & Colaboraciones</strong></div>
+                    <div class="contact-detail-icon" role="img" aria-label={c.details.availability.label}>🕐</div>
+                    <div><span>{c.details.availability.label}</span><strong>{c.details.availability.value}</strong></div>
                 </div>
                 <div class="contact-detail">
-                    <div class="contact-detail-icon" role="img" aria-label="Idiomas">💬</div>
-                    <div><span>Idiomas</span><strong>Español · Inglés</strong></div>
+                    <div class="contact-detail-icon" role="img" aria-label={c.details.languages.label}>💬</div>
+                    <div><span>{c.details.languages.label}</span><strong>{c.details.languages.value}</strong></div>
                 </div>
                 <div class="social-row">
                     {socials.map(s => (
@@ -34,7 +41,18 @@ const socials = [
                 </div>
             </div>
 
-            <form class="contact-form reveal" id="contactForm" novalidate aria-label="Formulario de contacto">
+            <form class="contact-form reveal" id="contactForm" novalidate
+                  aria-label={locale === 'en' ? 'Contact form' : 'Formulario de contacto'}
+                  data-submit={f.submit}
+                  data-sending={f.sending}
+                  data-success={f.success}
+                  data-error={f.error}
+                  data-val-nombre-req={t.contact.validation.nombreReq}
+                  data-val-email-req={t.contact.validation.emailReq}
+                  data-val-email-invalid={t.contact.validation.emailInvalid}
+                  data-val-mensaje-req={t.contact.validation.mensajeReq}
+                  data-val-mensaje-short={t.contact.validation.mensajeShort}>
+
                 <!-- Honeypot anti-spam (oculto para humanos) -->
                 <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none" aria-hidden="true">
                     <label for="website">No rellenar</label>
@@ -43,44 +61,47 @@ const socials = [
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="nombre">Nombre <span class="field-required" aria-label="requerido">*</span></label>
-                        <input type="text" id="nombre" placeholder="Tu nombre" required autocomplete="name" aria-describedby="error-nombre" aria-required="true" />
+                        <label for="nombre">{f.nombre} <span class="field-required" aria-label={f.requerido}>*</span></label>
+                        <input type="text" id="nombre" placeholder={f.nombrePh} required autocomplete="name"
+                               aria-describedby="error-nombre" aria-required="true" />
                         <span class="field-error" id="error-nombre" aria-live="polite"></span>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email <span class="field-required" aria-label="requerido">*</span></label>
-                        <input type="email" id="email" placeholder="tu@email.com" required autocomplete="email" aria-describedby="error-email" aria-required="true" />
+                        <label for="email">{f.email} <span class="field-required" aria-label={f.requerido}>*</span></label>
+                        <input type="email" id="email" placeholder={f.emailPh} required autocomplete="email"
+                               aria-describedby="error-email" aria-required="true" />
                         <span class="field-error" id="error-email" aria-live="polite"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="asunto">Asunto <span style="font-size:0.72rem;color:var(--text-secondary)">(opcional)</span></label>
+                    <label for="asunto">{f.asunto} <span style="font-size:0.72rem;color:var(--text-secondary)">{f.opcional}</span></label>
                     <select id="asunto">
-                        <option value="">Selecciona un servicio</option>
-                        <optgroup label="Desarrollo Web">
-                            <option>Quiero una web nueva</option>
-                            <option>Mejorar / optimizar mi web actual</option>
-                            <option>Proyecto Full Stack</option>
+                        <option value="">{f.asuntoPh}</option>
+                        <optgroup label={f.groups.webDev}>
+                            <option>{f.options.webNueva}</option>
+                            <option>{f.options.mejorarWeb}</option>
+                            <option>{f.options.fullStack}</option>
                         </optgroup>
-                        <optgroup label="Desarrollo Backend">
-                            <option>Desarrollo Backend (.NET / Java)</option>
+                        <optgroup label={f.groups.backend}>
+                            <option>{f.options.backend}</option>
                         </optgroup>
-                        <optgroup label="Especialidades">
-                            <option>Automatización con N8N</option>
-                            <option>Seguridad Web</option>
-                            <option>Base de Datos</option>
+                        <optgroup label={f.groups.specialties}>
+                            <option>{f.options.n8n}</option>
+                            <option>{f.options.seguridad}</option>
+                            <option>{f.options.bbdd}</option>
                         </optgroup>
-                        <optgroup label="Otros">
-                            <option>Otro</option>
+                        <optgroup label={f.groups.other}>
+                            <option>{f.options.otro}</option>
                         </optgroup>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="mensaje">Mensaje <span class="field-required" aria-label="requerido">*</span></label>
-                    <textarea id="mensaje" placeholder="Cuéntame sobre tu proyecto..." required aria-describedby="error-mensaje" aria-required="true"></textarea>
+                    <label for="mensaje">{f.mensaje} <span class="field-required" aria-label={f.requerido}>*</span></label>
+                    <textarea id="mensaje" placeholder={f.mensajePh} required
+                              aria-describedby="error-mensaje" aria-required="true"></textarea>
                     <span class="field-error" id="error-mensaje" aria-live="polite"></span>
                 </div>
-                <button type="submit" class="btn-primary form-submit" aria-live="polite">Enviar mensaje ✉️</button>
+                <button type="submit" class="btn-primary form-submit" aria-live="polite">{f.submit}</button>
             </form>
         </div>
     </div>
@@ -92,6 +113,21 @@ const socials = [
     const email   = document.getElementById('email')   as HTMLInputElement;
     const mensaje = document.getElementById('mensaje') as HTMLTextAreaElement;
 
+    // Leer mensajes localizados desde data-attributes
+    const msgs = {
+        nombreReq:    form.dataset.valNombreReq!,
+        emailReq:     form.dataset.valEmailReq!,
+        emailInvalid: form.dataset.valEmailInvalid!,
+        mensajeReq:   form.dataset.valMensajeReq!,
+        mensajeShort: form.dataset.valMensajeShort!,
+    };
+    const txt = {
+        submit:  form.dataset.submit!,
+        sending: form.dataset.sending!,
+        success: form.dataset.success!,
+        error:   form.dataset.error!,
+    };
+
     function showError(id: string, msg: string) {
         const el = document.getElementById(id);
         if (el) { el.textContent = msg; el.previousElementSibling?.classList.add('field-invalid'); }
@@ -102,19 +138,18 @@ const socials = [
     }
     function validateEmail(v: string) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
-    // Validación en tiempo real
     nombre.addEventListener('blur', () => {
-        if (!nombre.value.trim()) showError('error-nombre', 'El nombre es obligatorio');
+        if (!nombre.value.trim()) showError('error-nombre', msgs.nombreReq);
         else clearError('error-nombre');
     });
     email.addEventListener('blur', () => {
-        if (!email.value.trim()) showError('error-email', 'El email es obligatorio');
-        else if (!validateEmail(email.value.trim())) showError('error-email', 'Introduce un email válido');
+        if (!email.value.trim()) showError('error-email', msgs.emailReq);
+        else if (!validateEmail(email.value.trim())) showError('error-email', msgs.emailInvalid);
         else clearError('error-email');
     });
     mensaje.addEventListener('blur', () => {
-        if (!mensaje.value.trim()) showError('error-mensaje', 'El mensaje es obligatorio');
-        else if (mensaje.value.trim().length < 10) showError('error-mensaje', 'El mensaje es demasiado corto');
+        if (!mensaje.value.trim()) showError('error-mensaje', msgs.mensajeReq);
+        else if (mensaje.value.trim().length < 10) showError('error-mensaje', msgs.mensajeShort);
         else clearError('error-mensaje');
     });
 
@@ -123,16 +158,14 @@ const socials = [
         const btn      = form.querySelector('button[type=submit]') as HTMLButtonElement;
         const honeypot = (document.getElementById('website') as HTMLInputElement).value;
 
-        // Anti-spam: si el honeypot tiene valor, silenciosamente ignorar
-        if (honeypot) { btn.textContent = '✅ ¡Mensaje enviado!'; form.reset(); return; }
+        if (honeypot) { btn.textContent = txt.success; form.reset(); return; }
 
-        // Validación final
         let valid = true;
-        if (!nombre.value.trim())               { showError('error-nombre',  'El nombre es obligatorio'); valid = false; }
-        if (!email.value.trim())                { showError('error-email',   'El email es obligatorio');  valid = false; }
-        else if (!validateEmail(email.value))   { showError('error-email',   'Introduce un email válido'); valid = false; }
-        if (!mensaje.value.trim())              { showError('error-mensaje', 'El mensaje es obligatorio'); valid = false; }
-        else if (mensaje.value.trim().length < 10) { showError('error-mensaje', 'El mensaje es demasiado corto'); valid = false; }
+        if (!nombre.value.trim())                  { showError('error-nombre',  msgs.nombreReq);    valid = false; }
+        if (!email.value.trim())                   { showError('error-email',   msgs.emailReq);     valid = false; }
+        else if (!validateEmail(email.value))      { showError('error-email',   msgs.emailInvalid); valid = false; }
+        if (!mensaje.value.trim())                 { showError('error-mensaje', msgs.mensajeReq);   valid = false; }
+        else if (mensaje.value.trim().length < 10) { showError('error-mensaje', msgs.mensajeShort); valid = false; }
         if (!valid) return;
 
         const payload = {
@@ -142,7 +175,7 @@ const socials = [
             mensaje: mensaje.value.trim(),
         };
 
-        btn.textContent = 'Enviando...';
+        btn.textContent = txt.sending;
         btn.disabled = true;
         btn.setAttribute('aria-busy', 'true');
 
@@ -154,11 +187,11 @@ const socials = [
                 body:    JSON.stringify(payload),
             });
             if (!res.ok) throw new Error();
-            btn.textContent = '✅ ¡Mensaje enviado!';
+            btn.textContent = txt.success;
             btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
             form.reset();
         } catch {
-            btn.textContent = '❌ Error al enviar. Inténtalo de nuevo.';
+            btn.textContent = txt.error;
             btn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
             btn.disabled = false;
         } finally {
@@ -167,7 +200,7 @@ const socials = [
 
         clearTimeout(resetTimer!);
         resetTimer = setTimeout(() => {
-            btn.textContent = 'Enviar mensaje ✉️';
+            btn.textContent = txt.submit;
             btn.style.background = '';
             btn.disabled = false;
         }, 3500);

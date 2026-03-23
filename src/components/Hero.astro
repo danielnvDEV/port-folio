@@ -1,4 +1,10 @@
 ---
+import { useTranslations } from '../i18n/translations';
+
+const locale = Astro.currentLocale ?? 'es';
+const t      = useTranslations(locale);
+const h      = t.hero;
+
 const techs = ['.NET', 'Java', 'HTML/CSS/JS', 'SQL Server', 'MySQL', 'Git', 'N8N'];
 ---
 <section id="hero">
@@ -6,29 +12,26 @@ const techs = ['.NET', 'Java', 'HTML/CSS/JS', 'SQL Server', 'MySQL', 'Git', 'N8N
         <div class="hero-left">
             <span class="hero-eyebrow">
                 <span class="status-dot"></span>
-                Disponible para proyectos
+                {h.eyebrow}
             </span>
-            <h1>Hola, soy<br /><span class="hero-highlight">Daniel Navacerrada</span></h1>
-            <p class="hero-sub">
-                Especializado en <strong style="color:var(--text-primary)">.NET</strong> · Full Stack · 23 años ·
-                Transformo ideas en software escalable y de alto rendimiento.
-            </p>
+            <h1>{h.h1Line1}<br /><span class="hero-highlight">Daniel Navacerrada</span></h1>
+            <p class="hero-sub" set:html={h.sub} />
             <div class="hero-buttons">
-                <a href="#projects" class="btn-primary">Ver mis proyectos</a>
-                <a href="#contact"  class="btn-ghost">Ponerse en contacto</a>
+                <a href="#projects" class="btn-primary">{h.btnProjects}</a>
+                <a href="#contact"  class="btn-ghost">{h.btnContact}</a>
             </div>
             <dl class="hero-stats reveal">
                 <div class="stat-item">
                     <dd class="stat-number">4+</dd>
-                    <dt class="stat-label">Proyectos web</dt>
+                    <dt class="stat-label">{h.stats.projects}</dt>
                 </div>
                 <div class="stat-item">
                     <dd class="stat-number">2+</dd>
-                    <dt class="stat-label">Años exp.</dt>
+                    <dt class="stat-label">{h.stats.years}</dt>
                 </div>
                 <div class="stat-item">
                     <dd class="stat-number">7+</dd>
-                    <dt class="stat-label">Tecnologías</dt>
+                    <dt class="stat-label">{h.stats.tech}</dt>
                 </div>
             </dl>
             <div class="tech-stack">
@@ -54,7 +57,7 @@ const techs = ['.NET', 'Java', 'HTML/CSS/JS', 'SQL Server', 'MySQL', 'Git', 'N8N
                     <div class="code-line code-indent"><span class="c-brace">};</span></div>
                     <div class="code-line code-indent"><span class="c-prop">bool</span> available  = <span class="c-bool">true</span>;</div>
                     <div class="code-line"><span class="c-brace">}</span><span class="code-cursor"></span></div>
-                    <div class="code-line" style="margin-top:0.75rem"><span class="c-comment">// 📍 Disponible para nuevos proyectos</span></div>
+                    <div class="code-line" style="margin-top:0.75rem"><span class="c-comment">{h.codeComment}</span></div>
                 </div>
             </div>
         </div>

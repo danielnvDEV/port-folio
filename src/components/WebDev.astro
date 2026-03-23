@@ -1,58 +1,18 @@
 ---
-const offerings = [
-    {
-        icon: '🚀',
-        label: 'Desde cero',
-        title: 'Desarrollo de tu web',
-        desc: 'Diseño y desarrollo tu web completa: desde la idea hasta el despliegue en producción bajo tu dominio. Diseño responsivo, rendimiento optimizado y código limpio y mantenible.',
-        features: [
-            'Diseño adaptado a tu marca e identidad',
-            'Optimización para móvil, tablet y escritorio',
-            'SEO técnico incluido desde el primer día',
-            'Despliegue y configuración del dominio',
-            'Velocidad y Core Web Vitals optimizados',
-        ],
-        accent: 'var(--primary-light)',
-        bg: 'rgba(124,58,237,0.06)',
-        border: 'rgba(124,58,237,0.25)',
-    },
-    {
-        icon: '⚡',
-        label: 'Mejora tu web',
-        title: 'Optimización de web existente',
-        desc: 'Si ya tienes web pero no rinde como debería, la analizo y mejoro: velocidad, posicionamiento SEO, accesibilidad, seguridad o rediseño parcial o total.',
-        features: [
-            'Auditoría completa de rendimiento y SEO',
-            'Mejora de velocidad de carga (LCP, CLS, INP)',
-            'Corrección de errores y vulnerabilidades',
-            'Rediseño parcial o total manteniendo tu marca',
-            'Accesibilidad WCAG y compatibilidad móvil',
-        ],
-        accent: '#ec4899',
-        bg: 'rgba(236,72,153,0.06)',
-        border: 'rgba(236,72,153,0.25)',
-    },
-];
+import { useTranslations } from '../i18n/translations';
 
-const capabilities = [
-    { icon: '🏗️', title: 'Desarrollo Backend',  desc: 'APIs escalables, microservicios y sistemas robustos con .NET y Node.js.', badge: 'Popular' },
-    { icon: '🔐', title: 'Seguridad Web',        desc: 'Auditorías y remediación de vulnerabilidades OWASP Top 10.' },
-    { icon: '⚡', title: 'Automatización',        desc: 'Flujos automatizados con N8N, OCR y procesamiento de documentos.' },
-    { icon: '📊', title: 'Bases de Datos',        desc: 'Diseño, optimización y administración de SQL Server y MySQL.' },
-    { icon: '🌐', title: 'Full Stack',            desc: 'Desarrollo completo de aplicaciones web responsivas de alto rendimiento.' },
-    { icon: '⚙️', title: 'DevOps & Infra',        desc: 'Gestión de infraestructura, self-hosting y optimización de servidores.' },
-];
+const locale = Astro.currentLocale ?? 'es';
+const t      = useTranslations(locale);
+const s      = t.services;
 ---
 <section id="services" aria-labelledby="services-title">
     <div class="container">
-        <p class="section-label reveal">Qué ofrezco</p>
-        <h2 class="section-title reveal" id="services-title">¿Necesitas una web o mejorar la que tienes?</h2>
-        <p class="section-desc reveal">
-            Tanto si partes de cero como si ya tienes presencia online, te ayudo a tener una web que funcione, cargue rápido y posicione bien.
-        </p>
+        <p class="section-label reveal">{s.label}</p>
+        <h2 class="section-title reveal" id="services-title">{s.title}</h2>
+        <p class="section-desc reveal">{s.desc}</p>
 
         <div class="webdev-grid">
-            {offerings.map(o => (
+            {s.offerings.map(o => (
                 <article class="webdev-card reveal" style={`--card-accent:${o.accent};--card-bg:${o.bg};--card-border:${o.border}`}>
                     <div class="webdev-card-header">
                         <span class="webdev-label">{o.label}</span>
@@ -60,7 +20,7 @@ const capabilities = [
                     </div>
                     <h3>{o.title}</h3>
                     <p class="webdev-desc">{o.desc}</p>
-                    <ul class="webdev-features" aria-label={`Características de ${o.title}`}>
+                    <ul class="webdev-features" aria-label={o.title}>
                         {o.features.map(f => (
                             <li>
                                 <span class="webdev-check" aria-hidden="true">✓</span>
@@ -68,48 +28,35 @@ const capabilities = [
                             </li>
                         ))}
                     </ul>
-                    <a href="#contact" class="webdev-cta" aria-label={`Solicitar presupuesto — ${o.title}`}>
-                        Solicitar presupuesto →
+                    <a href="#contact" class="webdev-cta" aria-label={`${o.cta} — ${o.title}`}>
+                        {o.cta}
                     </a>
                 </article>
             ))}
         </div>
 
         <div class="webdev-process reveal">
-            <p class="webdev-process-title">¿Cómo trabajo?</p>
-            <ol class="webdev-steps" aria-label="Proceso de trabajo">
-                <li class="webdev-step">
-                    <span class="step-num" aria-hidden="true">01</span>
-                    <strong>Consulta inicial</strong>
-                    <span>Analizamos juntos qué necesitas y cuál es el mejor enfoque para tu proyecto.</span>
-                </li>
-                <li class="webdev-step">
-                    <span class="step-num" aria-hidden="true">02</span>
-                    <strong>Propuesta y presupuesto</strong>
-                    <span>Te envío un presupuesto detallado sin compromiso, con plazos claros.</span>
-                </li>
-                <li class="webdev-step">
-                    <span class="step-num" aria-hidden="true">03</span>
-                    <strong>Desarrollo</strong>
-                    <span>Trabajo con actualizaciones periódicas para que veas el progreso en todo momento.</span>
-                </li>
-                <li class="webdev-step">
-                    <span class="step-num" aria-hidden="true">04</span>
-                    <strong>Entrega y soporte</strong>
-                    <span>Despliegue en producción, formación básica y soporte post-entrega incluido.</span>
-                </li>
+            <p class="webdev-process-title">{s.process.title}</p>
+            <ol class="webdev-steps" aria-label={s.process.title}>
+                {s.process.steps.map(step => (
+                    <li class="webdev-step">
+                        <span class="step-num" aria-hidden="true">{step.num}</span>
+                        <strong>{step.title}</strong>
+                        <span>{step.desc}</span>
+                    </li>
+                ))}
             </ol>
         </div>
 
         <div class="capabilities-wrap reveal">
-            <p class="webdev-process-title">Otras especialidades</p>
+            <p class="webdev-process-title">{s.capabilities.title}</p>
             <ul class="services-grid" style="list-style:none;padding:0">
-                {capabilities.map(s => (
+                {s.capabilities.items.map(c => (
                     <li class="service-card reveal" role="article">
-                        {s.badge && <span class="service-badge" aria-label="Servicio popular">{s.badge}</span>}
-                        <div class="service-icon" role="img" aria-label={s.title}>{s.icon}</div>
-                        <h3>{s.title}</h3>
-                        <p>{s.desc}</p>
+                        {c.badge && <span class="service-badge" aria-label={locale === 'en' ? 'Popular service' : 'Servicio popular'}>{c.badge}</span>}
+                        <div class="service-icon" role="img" aria-label={c.title}>{c.icon}</div>
+                        <h3>{c.title}</h3>
+                        <p>{c.desc}</p>
                     </li>
                 ))}
             </ul>
@@ -210,7 +157,6 @@ const capabilities = [
 }
 .webdev-cta:hover { gap: 0.7rem; }
 
-/* Process */
 .webdev-process {
     background: rgba(255,255,255,0.02);
     border: 1px solid var(--border);
@@ -233,7 +179,6 @@ const capabilities = [
     list-style: none;
     padding: 0;
     margin: 0;
-    counter-reset: steps;
 }
 .webdev-step {
     display: flex;
@@ -267,13 +212,8 @@ const capabilities = [
     line-height: 1.6;
 }
 
-/* Capabilities subsection */
-.capabilities-wrap {
-    margin-top: 0;
-}
-.capabilities-wrap .webdev-process-title {
-    margin-bottom: 1.25rem;
-}
+.capabilities-wrap { margin-top: 0; }
+.capabilities-wrap .webdev-process-title { margin-bottom: 1.25rem; }
 
 @media (max-width: 768px) {
     .webdev-grid { grid-template-columns: 1fr; }

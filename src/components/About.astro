@@ -1,26 +1,23 @@
 ---
-const skills = [
-    { icon: 'BE',  title: 'Backend',        desc: '.NET Core, C#, Java, Node.js' },
-    { icon: 'DB',  title: 'Bases de Datos', desc: 'SQL Server, MySQL, diseño y optimización' },
-    { icon: 'FE',  title: 'Frontend',       desc: 'HTML, CSS, JavaScript' },
-    { icon: '🔐',  title: 'Seguridad',      desc: 'OWASP Top 10, validación de entrada' },
-    { icon: 'N8',  title: 'Automatización', desc: 'N8N, flujos de trabajo, OCR' },
-    { icon: 'OPS', title: 'DevOps',         desc: 'Git, self-hosting, infraestructura' },
-];
+import { useTranslations } from '../i18n/translations';
+
+const locale = Astro.currentLocale ?? 'es';
+const t      = useTranslations(locale);
+const a      = t.about;
 ---
 <section id="about">
     <div class="container">
-        <p class="section-label reveal">Quién soy</p>
-        <h2 class="section-title reveal">Apasionado por crear software que importa</h2>
+        <p class="section-label reveal">{a.label}</p>
+        <h2 class="section-title reveal">{a.title}</h2>
         <div class="about-grid">
             <div class="about-text reveal">
-                <p>Con 23 años y experiencia sólida en desarrollo backend y full stack, me especializo en crear soluciones robustas y escalables usando .NET como tecnología principal.</p>
-                <p>Me entusiasma trabajar en proyectos desafiantes que requieren optimización de rendimiento, arquitectura limpia y atención al detalle. Actualmente enfocado en automatización empresarial con N8N y seguridad de aplicaciones web.</p>
-                <p>Aprendiz continuo que se mantiene al día con las tendencias tecnológicas y siempre busca mejorar sus habilidades y entregar valor real.</p>
-                <a href="#contact" class="btn-primary" style="margin-top:1.5rem">Hablemos</a>
+                <p>{a.p1}</p>
+                <p>{a.p2}</p>
+                <p>{a.p3}</p>
+                <a href="#contact" class="btn-primary" style="margin-top:1.5rem">{a.cta}</a>
             </div>
             <ul class="skills-list reveal" style="list-style:none;padding:0">
-                {skills.map(s => (
+                {a.skills.map(s => (
                     <li class="skill-item">
                         <div class="skill-icon" role="img" aria-label={s.title}>{s.icon}</div>
                         <div class="skill-info">

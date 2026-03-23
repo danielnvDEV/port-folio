@@ -1,15 +1,20 @@
 ---
+import { useTranslations } from '../i18n/translations';
+
+const locale = Astro.currentLocale ?? 'es';
+const t      = useTranslations(locale);
+
 const links = [
-    { href: '#hero',       label: 'Inicio' },
-    { href: '#about',      label: 'Sobre mí' },
-    { href: '#projects',   label: 'Proyectos' },
-    { href: '#services',   label: 'Servicios' },
-    { href: '#experience', label: 'Experiencia' },
+    { href: '#hero',       label: t.nav.inicio },
+    { href: '#about',      label: t.nav.sobreMi },
+    { href: '#projects',   label: t.nav.proyectos },
+    { href: '#services',   label: t.nav.servicios },
+    { href: '#experience', label: t.nav.experiencia },
 ];
 ---
-<nav aria-label="Navegación principal">
+<nav aria-label={locale === 'en' ? 'Main navigation' : 'Navegación principal'}>
     <div class="nav-container">
-        <a href="#hero" class="logo" aria-label="Daniel Navacerrada — Inicio">
+        <a href={locale === 'en' ? '/en/' : '/'} class="logo" aria-label="Daniel Navacerrada — Inicio">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 155 90" fill="none" width="53" height="31" aria-hidden="true">
                 <defs>
                     <linearGradient id="navG" x1="0" y1="0" x2="155" y2="90" gradientUnits="userSpaceOnUse">
@@ -34,15 +39,45 @@ const links = [
                 <path fill="url(#navG)" d="M 96,82 L 110,82 L 145,8 L 131,8 Z"/>
             </svg>
         </a>
-        <button class="hamburger" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+        <button class="hamburger" id="menuBtn"
+                aria-label={locale === 'en' ? 'Open menu' : 'Abrir menú'}
+                aria-expanded="false" aria-controls="navLinks">
             <span></span><span></span><span></span>
         </button>
         <ul class="nav-links" id="navLinks" role="list">
             {links.map(l => <li><a href={l.href}>{l.label}</a></li>)}
-            <li><a href="#contact" class="nav-cta">Contactar</a></li>
+            <li>
+                <a href={t.nav.langSwitchHref}
+                   class="lang-btn"
+                   aria-label={t.nav.langSwitch}
+                   hreflang={locale === 'en' ? 'es' : 'en'}>
+                    {t.nav.langSwitch}
+                </a>
+            </li>
+            <li><a href="#contact" class="nav-cta">{t.nav.contactar}</a></li>
         </ul>
     </div>
 </nav>
+
+<style>
+.lang-btn {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary) !important;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem !important;
+    transition: all 0.3s !important;
+    text-decoration: none;
+}
+.lang-btn::after { display: none !important; }
+.lang-btn:hover {
+    color: var(--primary-light) !important;
+    border-color: rgba(124,58,237,0.4) !important;
+    background: rgba(124,58,237,0.06) !important;
+}
+</style>
 
 <script>
     const btn   = document.getElementById('menuBtn')!;
@@ -51,16 +86,13 @@ const links = [
     function closeMenu() {
         links.classList.remove('open');
         btn.setAttribute('aria-expanded', 'false');
-        btn.setAttribute('aria-label', 'Abrir menú');
     }
 
     btn.addEventListener('click', () => {
         const isOpen = links.classList.toggle('open');
         btn.setAttribute('aria-expanded', String(isOpen));
-        btn.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
     });
 
-    // Cerrar con Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && links.classList.contains('open')) closeMenu();
     });
@@ -69,7 +101,7 @@ const links = [
 
     // aria-current en link activo (offsetTop cacheado para evitar reflow en cada scroll)
     const sections   = document.querySelectorAll('section[id]');
-    const navAnchors = links.querySelectorAll('a:not(.nav-cta)');
+    const navAnchors = links.querySelectorAll('a:not(.nav-cta):not(.lang-btn)');
 
     type SectionTop = { id: string; top: number };
     let sectionTops: SectionTop[] = [];
